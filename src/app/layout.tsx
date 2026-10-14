@@ -32,7 +32,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <main className="flex-1 pb-20 md:pb-0">{children}</main>
         <Footer />
         <ButtonNav />
-        <Suspense />
+        <Suspense fallback={null}/>
       </body>
     </html>
   );
