@@ -6,6 +6,13 @@ const nextConfig: NextConfig = {
   partialPrefetching: true,
   allowedDevOrigins: ["192.168.1.75"],
   devIndicators: false,
+  images: {
+    remotePatterns: [
+      { protocol: "https", hostname: "images.unsplash.com" },
+      { protocol: "https", hostname: "plus.unsplash.com" },
+      { protocol: "https", hostname: "media.istockphoto.com" },
+    ],
+  },
   turbopack: {
     rules: {
       "*.css": {
