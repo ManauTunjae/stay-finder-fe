@@ -1,13 +1,14 @@
 import { getProperties } from "@/lib/api";
+import PropertyCard from "@/components/PropertyCard";
 
 export default async function Home() {
   const properties = await getProperties();
-  console.log("Antal boenden: ", properties.length);
-  console.log("Första: ", properties[0]?.title);
 
   return (
-    <main>
-      <h1>StayFinder</h1>
+    <main className="p-4 flex gap-4 overflow-x-auto">
+      {properties.map((p) => (
+        <PropertyCard key={p.property_id} property={p} />
+      ))}
     </main>
   );
 }
