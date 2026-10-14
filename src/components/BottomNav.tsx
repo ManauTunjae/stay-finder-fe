@@ -11,7 +11,7 @@ const navItems = [
   { label: "profile", href: "/auth-me", icon: CircleUser },
 ];
 
-export default function bottomNav() {
+export default function BottomNav() {
   const pathname = usePathname();
 
   return (
