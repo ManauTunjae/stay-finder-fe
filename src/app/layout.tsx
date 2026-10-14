@@ -31,8 +31,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Header />
         <main className="flex-1 pb-20 md:pb-0">{children}</main>
         <Footer />
-        <ButtomNav />
-        <Suspense fallback={null} />
+        <Suspense fallback={null}>
+          <ButtomNav />
+        </Suspense>
       </body>
     </html>
   );
