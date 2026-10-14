@@ -20,13 +20,13 @@ export default async function PropertyPage({ params }: Props) {
   const KindIcon = kind.icon;
 
   return (
-    <main className="p-4 md:px-10 md:py-8 max-w-4xl mx-auto">
+    <div className="p-4 md:px-10 md:py-8 max-w-4xl mx-auto">
       {/* Kind of property and city-location*/}
       <div className="flex gap-2 mb-4">
-        <span className="flex gap-2 items-center px-2 py-1 rounded-md bg-gray-100 text-md font-medium capitalize">
+        <span className="flex gap-2 items-center px-2 py-1 rounded-md bg-gray-100 text-base font-medium">
           <KindIcon /> {kind.label}
         </span>
-        <span className="flex gap-2 items-center px-2 py-1 rounded-md bg-gray-100 text-md font-medium capitalize">
+        <span className="flex gap-2 items-center px-2 py-1 rounded-md bg-gray-100 text-base font-medium">
           <MapPin /> {property.city}
         </span>
       </div>
@@ -62,14 +62,14 @@ export default async function PropertyPage({ params }: Props) {
         Max {property.max_guests} gäster
       </span>
       <span className="text-sm md:text-base flex gap-1 items-center">
-        <Wallet /> {property.price_per_night} SEK / natt
+        <Wallet /> {property.price_per_night.toLocaleString("sv-SE")} SEK / natt
       </span>
 
       {/*Description*/}
-      <section className="mt-6 ]border-t boder-gray-200 pt-6">
+      <section className="mt-5 border-t boder-gray-60 pt-6">
         <h2 className="text-lg font-semibold mb-1">Om detta boendet</h2>
-        <p className="text-gray=700 leading-relaxed">{property.description}</p>
+        <p className="text-gray-700 leading-relaxed">{property.description}</p>
       </section>
-    </main>
+    </div>
   );
 }
