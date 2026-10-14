@@ -20,25 +20,19 @@ export default function Header() {
       </Link>
 
       {/*Desktop view*/}
-      <nav className="hidden relative md:flex justify-between items-center gap-10">
-        {navLinks.map((l) => (
-          <Link key={l.label} href={l.href}>
-            {l.label}
-          </Link>
-        ))}
-      </nav>
+      
 
       {/*Mobile view*/}
       <button
         aria-label="Öppna meny"
-        className="md:hidden cursor-pointer"
+        className="cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}
       >
         {isOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
       </button>
 
       {isOpen && (
-        <nav className="absolute right-4 top-full md:hidden z-10 bg-white flex flex-col gap-3 p-4 rounded-lg shadow-md">
+        <nav className="absolute right-4 top-full z-10 bg-white flex flex-col gap-3 p-4 rounded-lg shadow-md">
           {navLinks.map((l) => (
             <Link key={l.href} href={l.href} onClick={() => setIsOpen(false)}>
               {l.label}
