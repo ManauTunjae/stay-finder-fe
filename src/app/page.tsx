@@ -2,13 +2,20 @@ import { getProperties } from "@/lib/api";
 import PropertyCard from "@/components/PropertyCard";
 import { ArrowRight } from "lucide-react";
 
+const featured = ["Stockholm", "Göteborg"];
+
 export default async function Home() {
   const properties = await getProperties();
   const cities = [...new Set(properties.map((p) => p.city))];
 
+  const sortedCities = [
+    ...featured.filter((c) => cities.includes(c)),
+    ...cities.filter((c) => !featured.includes(c))
+  ]
+
   return (
     <main className="p-4 flex flex-col gap-4 overflow-x-auto md:gap-10">
-      {cities.map((c) => (
+      {sortedCities.map((c) => (
         <section key={c}>
           <div className="flex items-center gap-2 md:px-10 mb-3">
             <h2 className="text-lg md:text-xl font-semibold">{c}</h2>
