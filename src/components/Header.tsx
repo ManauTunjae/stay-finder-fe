@@ -1,6 +1,12 @@
 import { Menu } from "lucide-react";
 import Link from "next/link";
 
+const navLinks = [
+  { label: "Få hjälp", href: "/properties" },
+  { label: "Sök", href: "/properties" },
+  { label: "Bli medlem eller logga in", href: "/auth/register" },
+];
+
 export default function Header() {
   return (
     <header className="flex justify-between items-center bg-blue-200/50 px-4 py-3">
