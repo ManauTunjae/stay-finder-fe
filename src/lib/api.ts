@@ -27,7 +27,7 @@ export async function getPropertyById(id: string): Promise<Property | null> {
   const res = await fetch(`${API_URL}/properties/${id}`);
 
   if (res.status === 404) {
-    throw new Error("Property not found");
+    return null;
   }
 
   if (!res.ok) {
