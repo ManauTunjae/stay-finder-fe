@@ -7,9 +7,7 @@ type Props = {
 
 export default async function PropertyPage({ params }: Props) {
   const { id } = await params;
-  console.log("Sidan körs, id:", id);
   const property = await getPropertyById(id);
-  console.log("Boende:", property);
 
   if (!property) {
     notFound();
