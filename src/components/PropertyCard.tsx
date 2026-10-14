@@ -9,7 +9,7 @@ type Props = {
 export default function PropertyCard({ property }: Props) {
   return (
     <Link
-      href={`/properties/${property.image_url}`}
+      href={`/properties/${property.property_id}`}
       className="block w-40 md:w-56 lg:w-56 py-2 px-1 shrink-0"
     >
       <div className="relative aspect-square rounded-xl overflow-hidden bg-gray-200">
