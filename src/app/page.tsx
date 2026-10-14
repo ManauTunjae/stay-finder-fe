@@ -5,7 +5,7 @@ export default async function Home() {
   const properties = await getProperties();
 
   return (
-    <main className="p-4 flex gap-4 overflow-x-auto">
+    <main className="p-4 flex gap-4 overflow-x-auto md:gap-10">
       {properties.map((p) => (
         <PropertyCard key={p.property_id} property={p} />
       ))}
