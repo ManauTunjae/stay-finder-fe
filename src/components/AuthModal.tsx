@@ -37,59 +37,74 @@ export default function AuthModal() {
       setIsSubmitting(false);
     }
   };
-}
 
-return (
-  <div
-    className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4"
-    onClick={closeAuthModal}
-  >
+  return (
     <div
-      className="relative bg-white rounded-2xl shadow-lg w-full max-w-sm p-6"
-      onClick={(e) => e.stopPropagation()}
+      className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4"
+      onClick={closeAuthModal}
     >
-      <button
-        aria-label="Close"
-        className="absolute top-4 right-4 cursor-pointer"
-        onClick={closeAuthModal}
+      <div
+        className="relative bg-white rounded-2xl shadow-lg w-full max-w-sm p-6"
+        onClick={(e) => e.stopPropagation()}
       >
-        <X className="w-7 h-7" />
-      </button>
-      <h2 className="text-xl font-bold text-center mb-6">
-        {isLogin ? "Login" : "Register"}
-      </h2>
-
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <label className="block text-sm font-bold text-gray-700 mb-1.5 uppercase tracking-wider">
-          E-post
-        </label>
-        <input
-          type="email"
-          required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full bg-gray-100/70 border border-gray-200/80 rounded-xl px-4 py-3.5 text-gray-950 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all shadow-sm"
-          placeholder="Email"
-        />
-        <label className="block text-sm font-bold text-gray-700 mb-1.5 uppercase tracking-wider">
-          Lösenord
-        </label>
-        <input
-          type="password"
-          required
-          value={password}
-          minLength={6}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full bg-gray-100/70 border border-gray-200/80 rounded-xl px-4 py-3.5 text-gray-950 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all shadow-sm"
-          placeholder="Password"
-        />
-
-        {error && <p className="text-sm text-red-600">{error}</p>}
-
-        <button>
-            
+        <button
+          aria-label="Close"
+          className="absolute top-4 right-4 cursor-pointer"
+          onClick={closeAuthModal}
+        >
+          <X className="w-7 h-7" />
         </button>
-      </form>
+        <h2 className="text-xl font-bold text-center mb-6">
+          {isLogin ? "Login" : "Register"}
+        </h2>
+
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <label className="block text-sm font-bold text-gray-700 mb-1.5 uppercase tracking-wider">
+            E-post
+          </label>
+          <input
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full bg-gray-100/70 border border-gray-200/80 rounded-xl px-4 py-3.5 text-gray-950 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all shadow-sm"
+            placeholder="Email"
+          />
+          <label className="block text-sm font-bold text-gray-700 mb-1.5 uppercase tracking-wider">
+            Lösenord
+          </label>
+          <input
+            type="password"
+            required
+            value={password}
+            minLength={6}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full bg-gray-100/70 border border-gray-200/80 rounded-xl px-4 py-3.5 text-gray-950 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all shadow-sm"
+            placeholder="Password"
+          />
+
+          {error && <p className="text-sm text-red-600">{error}</p>}
+
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="bg-blue-900 text-white rounded-lg py-2 font-semibold cursor-pointer disabled:opacity-50"
+          >
+            {isSubmitting ? "Vänta..." : isLogin ? "Logga in" : "Skapa konto"}
+          </button>
+        </form>
+
+        <p className="text-sm text-center mt-4">
+          {isLogin ? "Inget konto än? " : "Har du redan ett konto? "}
+          <button
+            type="button"
+            className="underline cursor-pointer"
+            onClick={() => openAuthModal(isLogin ? "register" : "login")}
+          >
+            {isLogin ? "Bli medlem" : "Login"}
+          </button>
+        </p>
+      </div>
     </div>
-  </div>
-);
+  );
+}
