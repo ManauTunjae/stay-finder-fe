@@ -35,6 +35,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .catch(() => setUser(null))
       .finally(() => setIsLoading(false));
   }, []);
+
+  async function logoutUser() {
+    await logout();
+    setUser(null);
+  }
+
+  function openAuthModal(mode: AuthMode) {
+    setModalMode(mode);
+  }
+
+  function closeAuthModal() {
+    setModalMode(null);
+  }
+
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        isLoading,
+        setUser,
+        logoutUser,
+        modalMode,
+        openAuthModal,
+        closeAuthModal,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 }
-
-
