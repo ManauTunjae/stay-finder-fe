@@ -90,7 +90,7 @@ export default function AuthModal() {
             disabled={isSubmitting}
             className="bg-blue-900 text-white rounded-lg py-2 font-semibold cursor-pointer disabled:opacity-50"
           >
-            {isSubmitting ? "Vänta..." : isLogin ? "Logga in" : "Skapa konto"}
+            {isSubmitting ? "Vänta..." : isLogin ? "Login" : "Skapa konto"}
           </button>
         </form>
 
