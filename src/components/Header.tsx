@@ -7,7 +7,7 @@ import Link from "next/link";
 
 const navLinks = [
   { label: "Få hjälp", href: "/help" },
-  { label: "Sök", href: "/search" }
+  { label: "Sök", href: "/search" },
 ];
 
 export default function Header() {
@@ -22,19 +22,39 @@ export default function Header() {
 
       {/* Höger: "Skapa boende" (bara desktop) + hamburgermeny (alltid) */}
       <div className="flex items-center gap-2">
-        <Link
-          href="/auth/register"
-          className="bg-gray-300 hidden md:block px-4 py-2 rounded-full hover:bg-white text-sm font-medium"
-        >
-          Skapa boende
-        </Link>
+        {user ? (
+          <Link
+            href="/auth/register"
+            className="bg-gray-300 hidden md:block px-4 py-2 rounded-full hover:bg-white text-sm font-medium"
+          >
+            Skapa boende
+          </Link>
+        ) : (
+          <button
+            onClick={() => openAuthModal("login")}
+            className="bg-gray-300 hidden md:block px-4 py-2 rounded-full hover:bg-white text-sm font-medium cursor-pointer"
+          >
+            Skapa boenden
+          </button>
+        )}
 
-        <Link
-          href="/auth/register"
-          className="bg-gray-300 hidden md:block p-1 rounded-2xl hover:bg-white w-8 h-8 text-gray-700"
-        >
-          <User />
-        </Link>
+        {user ? (
+          <Link
+            href="/auth/register"
+            aria-label="Min profil"
+            className="bg-gray-300 hidden md:block p-1 rounded-2xl hover:bg-white w-8 h-8 text-gray-700"
+          >
+            <User />
+          </Link>
+        ) : (
+          <button
+            onClick={() => openAuthModal("login")}
+            aria-label="Min profil"
+            className="bg-gray-300 hidden md:block px-4 py-2 rounded-full hover:bg-white text-sm font-medium cursor-pointer"
+          >
+            <User />
+          </button>
+        )}
 
         <button
           aria-label="Öppna meny"
