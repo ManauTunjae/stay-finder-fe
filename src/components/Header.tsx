@@ -7,13 +7,12 @@ import Link from "next/link";
 
 const navLinks = [
   { label: "Få hjälp", href: "/help" },
-  { label: "Sök", href: "/search" },
-  { label: "Bli medlem eller logga in", href: "/auth/register" },
+  { label: "Sök", href: "/search" }
 ];
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const { user, isLoading } = useAuth();
+  const { user, isLoading, openAuthModal, logoutUser } = useAuth();
 
   return (
     <header className="relative flex justify-between items-center bg-blue-200/50 px-4 md:px-10 py-3">
