@@ -65,3 +65,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     </AuthContext.Provider>
   );
 }
+
+export function useAuth() {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("usrAuth m[ste anv'ndas inuti AuthProvider");
+  }
+  return context;
+}
