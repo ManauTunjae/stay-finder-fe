@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useAuth } from "@/context/AuthContext";
 import { Menu, X, User } from "lucide-react";
 import Link from "next/link";
 
@@ -12,6 +13,7 @@ const navLinks = [
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, isLoading } = useAuth();
 
   return (
     <header className="relative flex justify-between items-center bg-blue-200/50 px-4 md:px-10 py-3">

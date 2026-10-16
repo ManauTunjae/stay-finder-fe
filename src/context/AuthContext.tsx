@@ -10,7 +10,7 @@ import {
 import type { User } from "@/types/user";
 import { getMe, logout } from "@/lib/auth";
 
-type AuthMode = "lgin" | "register";
+type AuthMode = "login" | "register";
 
 type AuthContextType = {
   user: User | null;
@@ -69,7 +69,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 export function useAuth() {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error("usrAuth m[ste anv'ndas inuti AuthProvider");
+    throw new Error("useAuth måste användas inuti AuthProvider");
   }
   return context;
 }
