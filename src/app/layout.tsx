@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import ButtomNav from "@/components/BottomNav";
 import Footer from "@/components/Footer";
 import { AuthProvider } from "@/context/AuthContext";
+import AuthModal from "@/components/AuthModal";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,6 +37,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <Suspense fallback={null}>
             <ButtomNav />
           </Suspense>
+          <AuthModal />
         </AuthProvider>
       </body>
     </html>
