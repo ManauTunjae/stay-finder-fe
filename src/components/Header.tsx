@@ -77,6 +77,53 @@ export default function Header() {
               {l.label}
             </Link>
           ))}
+
+          <hr className="my-2 border-gray-200" />
+
+          {isLoading ? null : user ? (
+            // Inloggad
+            <>
+              <p className="px-4 py-2 text-xs text-gray-500">{user.email}</p>
+              <Link
+                href="/bookings"
+                onClick={() => setIsOpen(false)}
+                className="px-4 py-2 hover:bg-gray-100 rounded-lg text-sm"
+              >
+                Mina Bokningar
+              </Link>
+              <button
+                onClick={() => {
+                  logoutUser();
+                  setIsOpen(false);
+                }}
+                className="px-4 py-3 hover:bg-gray-100 rounded-lg text-sm text-left cursor-pointer"
+              >
+                Logga ut
+              </button>
+            </>
+          ) : (
+            // Utloggad
+            <>
+              <button
+                onClick={() => {
+                  openAuthModal("login");
+                  setIsOpen(false);
+                }}
+                className="px-4 py-3 hover:bg-gray-100 rounded-lg text-sm text-left cursor-pointer"
+              >
+                Logga in
+              </button>
+              <button
+                onClick={() => {
+                  openAuthModal("register");
+                  setIsOpen(false);
+                }}
+                className="px-4 py-3 hover:bg-gray-100 rounded-lg text-sm text-left cursor-pointer"
+              >
+                Bli medlem
+              </button>
+            </>
+          )}
         </nav>
       )}
     </header>
