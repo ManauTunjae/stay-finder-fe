@@ -23,3 +23,9 @@ type AuthContextType = {
 };
 
 const AuthContext = createContext<AuthContextType | null>(null);
+
+export function AuthProvider({ children }: {children: ReactNode }) {
+    const [user, setUser] = useState<User | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [modalMode, setModalMode] = useState<AuthMode | null>(null);
+}
