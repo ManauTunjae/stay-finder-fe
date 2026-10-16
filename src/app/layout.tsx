@@ -5,6 +5,8 @@ import "./globals.css";
 import Header from "@/components/Header";
 import ButtomNav from "@/components/BottomNav";
 import Footer from "@/components/Footer";
+import { AuthProvider } from "@/context/AuthContext";
+import AuthModal from "@/components/AuthModal";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,12 +30,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <Header />
-        <main className="flex-1 pb-20 md:pb-0">{children}</main>
-        <Footer />
-        <Suspense fallback={null}>
-          <ButtomNav />
-        </Suspense>
+        <AuthProvider>
+          <Header />
+          <main className="flex-1 pb-20 md:pb-0">{children}</main>
+          <Footer />
+          <Suspense fallback={null}>
+            <ButtomNav />
+          </Suspense>
+          <AuthModal />
+        </AuthProvider>
       </body>
     </html>
   );
