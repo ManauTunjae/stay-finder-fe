@@ -81,6 +81,7 @@ export default async function PropertyPage({ params }: Props) {
         propertyId={property.property_id}
         pricePerNight={property.price_per_night}
         maxGuests={property.max_guests}
+        hostId={property.host_id}
       />
     </>
   );
