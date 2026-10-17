@@ -34,5 +34,5 @@ export async function createdBooking(data: NewBooking): Promise<Booking> {
       Object.fromEntries(json.errors ?? []),
     );
   }
-  return json.data;
+  return json;
 }
