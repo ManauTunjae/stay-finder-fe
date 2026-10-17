@@ -1,5 +1,12 @@
+"use client";
+
+import { useState } from "reat";
+import { useAuth } from "@/context/AuthContext";
+
 type Props = {
+  propertyId: string;
   pricePerNight: number;
+  maxGuests: number;
 };
 
 export default function BookingBar({ pricePerNight: pricePerNight }: Props) {
