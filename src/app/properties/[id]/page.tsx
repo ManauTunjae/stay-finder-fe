@@ -77,7 +77,11 @@ export default async function PropertyPage({ params }: Props) {
         </section>
       </div>
 
-      <BookingBar pricePerNight={property.price_per_night} />
+      <BookingBar
+        propertyId={property.property_id}
+        pricePerNight={property.price_per_night}
+        maxGuests={property.max_guests}
+      />
     </>
   );
 }
