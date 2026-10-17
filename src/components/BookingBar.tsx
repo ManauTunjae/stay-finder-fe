@@ -1,10 +1,35 @@
+"use client";
+
+import { useState } from "react";
+import { useAuth } from "@/context/AuthContext";
+
 type Props = {
+  propertyId: string;
   pricePerNight: number;
+  maxGuests: number;
+  hostId: string;
 };
 
-export default function BookingBar({ pricePerNight: pricePerNight }: Props) {
+export default function BookingBar({
+  propertyId,
+  pricePerNight,
+  maxGuests,
+  hostId,
+}: Props) {
+  const { user, isLoading, openAuthModal } = useAuth();
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const isOwner = user?.id === hostId;
+
+  function handleBookClick() {
+    if (!user) {
+      openAuthModal("login");
+      return;
+    }
+    setIsFormOpen(true);
+  }
+
   return (
-    <div className="sticky bottom-0 bg-gray-100/90 boder-t border-gray-200 px-4 md:px-10 py-3">
+    <div className="sticky bottom-0 bg-gray-100/90 border-t border-gray-200 px-4 md:px-10 py-3">
       <div className="max-w-4xl mx-auto flex justify-between items-center">
         <div>
           <p className="font-semibold underline">
@@ -13,10 +38,23 @@ export default function BookingBar({ pricePerNight: pricePerNight }: Props) {
           <p className="text-xs text-gray-500">Tillgänglig att boka</p>
         </div>
 
-        <button className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-lg cursor-pointer">
-          Boka
-        </button>
+        {isOwner ? (
+          <p className="text-sm font-medium text-gray-600">Mitt boende</p>
+        ) : (
+          <button
+            onClick={handleBookClick}
+            disabled={isLoading}
+            className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-lg cursor-pointer disabled:opacity-50"
+          >
+            Boka
+          </button>
+        )}
       </div>
+      {isFormOpen && (
+        <p className="p-4 text-center">
+          Formuläret kommer här för boende {propertyId}
+        </p>
+      )}
     </div>
   );
 }
