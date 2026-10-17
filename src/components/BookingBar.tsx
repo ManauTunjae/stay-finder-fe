@@ -7,15 +7,18 @@ type Props = {
   propertyId: string;
   pricePerNight: number;
   maxGuests: number;
+  hostId: string;
 };
 
 export default function BookingBar({
   propertyId,
   pricePerNight,
   maxGuests,
+  hostId,
 }: Props) {
   const { user, isLoading, openAuthModal } = useAuth();
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const isOwner = user?.id === hostId;
 
   function handleBookClick() {
     if (!user) {
@@ -35,13 +38,17 @@ export default function BookingBar({
           <p className="text-xs text-gray-500">Tillgänglig att boka</p>
         </div>
 
-        <button
-          onClick={handleBookClick}
-          disabled={isLoading}
-          className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-lg cursor-pointer disabled:opacity-50"
-        >
-          Boka
-        </button>
+        {isOwner ? (
+          <p className="text-sm font-medium text-gray-600">Mitt boende</p>
+        ) : (
+          <button
+            onClick={handleBookClick}
+            disabled={isLoading}
+            className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-lg cursor-pointer disabled:opacity-50"
+          >
+            Boka
+          </button>
+        )}
       </div>
       {isFormOpen && (
         <p className="p-4 text-center">
