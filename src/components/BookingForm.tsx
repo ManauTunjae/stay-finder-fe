@@ -25,3 +25,42 @@ export default function BookingForm({
   const [guestName, setGuestName] = useState("");
   const [guestEmail, setGuestEmail] = useState(user?.email ?? "");
 }
+
+return (
+  <div
+    className="fixed insert-0 z-50 bg-black/50 flex items-center justify-center p-4"
+    onClick={onClose}
+  >
+    <div
+      className="relative bg-white rounded-2xl shadow-lg w-full max-w-sm p-6"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button
+        aria-label="Stäng"
+        className="absolute top-4 right-4 cursor-pointer"
+        onClick={onClose}
+      >
+        <X className="w-6 h-6" />
+      </button>
+
+      <h2 className="text-xl font-bold mb-6">Boka boendet</h2>
+
+      <form className="flex flex-col gap-4">
+        <div>
+          <label htmlFor="guests" className="block text-sm font-semibold mb-1">
+            Antal gäster
+          </label>
+          <input
+            id="guests"
+            type="number"
+            min={1}
+            max={maxGuests}
+            value={guests}
+            onChange={(e) => setGuests(Number(e.target.value))}
+            className="w-full border border-gray-300 rounded-lg px-3 py-2"
+          />
+        </div>
+      </form>
+    </div>
+  </div>
+);
