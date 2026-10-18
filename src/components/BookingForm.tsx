@@ -27,7 +27,7 @@ export default function BookingForm({
 
   return (
     <div
-      className="fixed insert-0 z-50 bg-black/50 flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4"
       onClick={onClose}
     >
       <div
@@ -95,23 +95,37 @@ export default function BookingForm({
             />
           </div>
 
-          {/* <div>
+          <div>
             <label
-              htmlFor="guest"
+              htmlFor="guestName"
               className="block text-sm font-semibold mb-1"
             >
-              Antal gäster
+              Ditt nman
             </label>
             <input
-              id="guests"
-              type="number"
-              min={1}
-              max={maxGuests}
-              value={guests}
-              onChange={(e) => setGuests(Number(e.target.value))}
+              id="guestName"
+              type="text"
+              value={guestName}
+              onChange={(e) => setGuestName(e.target.value)}
               className="w-full border border-gray-300 rounded-lg px-3 py-2"
             />
-          </div> */}
+          </div>
+
+          <div>
+            <label
+              htmlFor="guestEmail"
+              className="block text-sm font-semibold mb-1"
+            >
+              Ditt e-post
+            </label>
+            <input
+              id="guestEmail"
+              type="email"
+              value={guestEmail}
+              onChange={(e) => setGuestEmail(e.target.value)}
+              className="w-full border border-gray-300 rounded-lg px-3 py-2"
+            />
+          </div>
         </form>
       </div>
     </div>
