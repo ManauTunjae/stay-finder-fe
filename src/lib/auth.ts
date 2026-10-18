@@ -1,6 +1,6 @@
 import type { User } from "@/types/user";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL = "/api";
 
 export async function register(email: string, password: string): Promise<User> {
   const res = await fetch(`${API_URL}/auth/register`, {
