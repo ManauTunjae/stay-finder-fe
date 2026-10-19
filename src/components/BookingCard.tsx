@@ -80,6 +80,41 @@ export default function BookingCard({ booking, onUpdated, isHost }: Props) {
     }
   }
 
+  const canEdit =
+    !isHost &&
+    booking.status === "pending" &&
+    booking.check_in >= getTodayDate();
+
+  async function handleSave() {
+    setError(null);
+    setIsSaving(true);
+
+    try {
+      let latest = booking;
+
+      if (editGuests !== booking.guests) {
+        latest = await updateBookingGuests(booking.booking_id, editGuests);
+      }
+
+      if (
+        editCheckIn !== booking.check_in ||
+        editCheckOut !== booking.check_out
+      ) {
+        latest = await updateBookingDates(
+          booking.booking_id,
+          editCheckIn,
+          editCheckOut,
+        );
+      }
+      onUpdated(latest);
+      setIsEditing(true);
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "Något gick fel");
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
   return (
     <div className="border border-gray-200 rounded-xl p-4 flex flex-col gap-2">
       <span
