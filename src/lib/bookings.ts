@@ -17,6 +17,18 @@ export class ApiError extends Error {
   }
 }
 
+export async function getMyBookings(): Promise<Booking[]> {
+  const res = await fetch(`${API_URL}/bookings`, {
+    credentials: "include",
+  });
+  const json = await res.json();
+
+  if (!res.ok) {
+    throw new ApiError(json.error ?? "Kunde inte hämta bokningar", res.status);
+  }
+  return json.data;
+}
+
 export async function createdBooking(data: NewBooking): Promise<Booking> {
   const res = await fetch(`${API_URL}/bookings`, {
     method: "POST",
