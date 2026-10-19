@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { getMyBookings } from "@/lib/bookings";
 import type { Booking } from "@/types/booking";
+import BookingCard from "@/components/BookingCard"
 
 export default function BookingsPage() {
   const { user, isLoading, openAuthModal } = useAuth();
@@ -49,7 +50,7 @@ export default function BookingsPage() {
             ) : (
                 <div className="flex flex-col gap-3">
                     {myBookings.map((b) => (
-                        </>
+                        <BookingCard key={b.booking_id} booking={b}/>
                     ))}
                 </div>
             )}
