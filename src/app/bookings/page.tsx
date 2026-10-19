@@ -22,6 +22,12 @@ export default function BookingsPage() {
       .finally(() => setIsFetching(false));
   }, [user, isLoading]);
 
+  function handleUpdated(updated: Booking) {
+    setBookings((prev) =>
+      prev.map((b) => (b.booking_id === updated.booking_id ? updated : b)),
+    );
+  }
+
   if (isLoading) {
     return <p className="p-4">Laddar...</p>;
   }
@@ -55,7 +61,11 @@ export default function BookingsPage() {
         ) : (
           <div className="flex flex-col gap-3">
             {myBookings.map((b) => (
-              <BookingCard key={b.booking_id} booking={b} />
+              <BookingCard
+                key={b.booking_id}
+                booking={b}
+                onUpdated={handleUpdated}
+              />
             ))}
           </div>
         )}
@@ -66,7 +76,11 @@ export default function BookingsPage() {
           <h2 className="text-2xl font-bold mb-4">Bokningar på mina boenden</h2>
           <div className="flex flex-col gap-3">
             {hostBookings.map((b) => (
-              <BookingCard key={b.booking_id} booking={b} />
+              <BookingCard
+                key={b.booking_id}
+                booking={b}
+                onUpdated={handleUpdated}
+              />
             ))}
           </div>
         </section>
