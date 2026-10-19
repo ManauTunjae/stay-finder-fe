@@ -2,7 +2,13 @@
 
 import { useState } from "react";
 import type { Booking, BookingStatus } from "@/types/booking";
-import { ApiError, cancelBooking, confirmBooking } from "@/lib/bookings";
+import {
+  ApiError,
+  cancelBooking,
+  confirmBooking,
+  updateBookingDates,
+  updateBookingGuests,
+} from "@/lib/bookings";
 import { getTodayDate } from "@/lib/date";
 
 const statusInfo: Record<BookingStatus, { label: string; className: string }> =
