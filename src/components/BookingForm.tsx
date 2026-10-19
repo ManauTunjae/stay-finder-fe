@@ -51,13 +51,13 @@ export default function BookingForm({
         guest_email: guestEmail,
         check_in: checkIn,
         check_out: checkOut,
-        guests: maxGuests,
+        guests: guests,
       });
       setBooking(newBooking);
     } catch (err) {
       if (err instanceof ApiError) {
         setError(err.message);
-        setFieldErrors({});
+        setFieldErrors(err.fieldErrors);
       } else {
         setError("Något gick fel");
       }
@@ -85,14 +85,14 @@ export default function BookingForm({
 
         <h2 className="text-xl font-bold mb-3">Boka boendet</h2>
 
-        <div className="bg-green-300/30 rounded-lg p-3 text-md">
+        <div className="bg-blue-300/20 rounded-lg p-3 text-base">
           {nights > 0 ? (
             <>
               <p>
-                {pricePerNight.toLocaleString("sv-SE")} SEK × {nights}{" "}
+                {pricePerNight.toLocaleString("sv-SE")} SEK x {nights}{" "}
                 {nights === 1 ? "natt" : "nätter"}
               </p>
-              <p className="font-bold text-base mt-1">
+              <p className="font-bold text-base text-blue-700 mt-1">
                 Totalt {totalPrice.toLocaleString("sv-SE")} SEK
               </p>
             </>
@@ -101,7 +101,7 @@ export default function BookingForm({
           )}
         </div>
 
-        <form className="flex flex-col gap-4 py-3">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 py-3">
           <div>
             <label
               htmlFor="guests"
@@ -118,6 +118,10 @@ export default function BookingForm({
               onChange={(e) => setGuests(Number(e.target.value))}
               className="w-full border border-gray-300 rounded-lg px-3 py-2"
             />
+
+            {fieldErrors.guests && (
+              <p className="text-xs text-red-600 mt-1">{fieldErrors.guests}</p>
+            )}
           </div>
 
           <div>
@@ -135,6 +139,11 @@ export default function BookingForm({
               onChange={(e) => setCheckIn(e.target.value)}
               className="w-full border border-gray-300 rounded-lg px-3 py-2"
             />
+            {fieldErrors.check_in && (
+              <p className="text-xs text-red-600 mt-1">
+                {fieldErrors.check_in}
+              </p>
+            )}
           </div>
 
           <div>
@@ -152,6 +161,11 @@ export default function BookingForm({
               onChange={(e) => setCheckOut(e.target.value)}
               className="w-full border border-gray-300 rounded-lg px-3 py-2"
             />
+            {fieldErrors.check_out && (
+              <p className="text-xs text-red-600 mt-1">
+                {fieldErrors.check_out}
+              </p>
+            )}
           </div>
 
           <div>
@@ -159,7 +173,7 @@ export default function BookingForm({
               htmlFor="guestName"
               className="block text-sm font-semibold mb-1"
             >
-              Ditt nman
+              Ditt namn
             </label>
             <input
               id="guestName"
@@ -168,6 +182,11 @@ export default function BookingForm({
               onChange={(e) => setGuestName(e.target.value)}
               className="w-full border border-gray-300 rounded-lg px-3 py-2"
             />
+            {fieldErrors.guest_name && (
+              <p className="text-xs text-red-600 mt-1">
+                {fieldErrors.guest_name}
+              </p>
+            )}
           </div>
 
           <div>
@@ -175,7 +194,7 @@ export default function BookingForm({
               htmlFor="guestEmail"
               className="block text-sm font-semibold mb-1"
             >
-              Ditt e-post
+              Din e-post
             </label>
             <input
               id="guestEmail"
@@ -184,7 +203,25 @@ export default function BookingForm({
               onChange={(e) => setGuestEmail(e.target.value)}
               className="w-full border border-gray-300 rounded-lg px-3 py-2"
             />
+            {fieldErrors.guest_email && (
+              <p className="text-xs text-red-600 mt-1">
+                {fieldErrors.guest_email}
+              </p>
+            )}
           </div>
+
+          {error && (
+            <p className="bg-red-50 text-red-700 text-sm rounded-lg p-3">
+              {error}
+            </p>
+          )}
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-lg cursor-pointer disabled:opacity-50"
+          >
+            {isSubmitting ? "Skickar..." : "Boka"}
+          </button>
         </form>
       </div>
     </div>
