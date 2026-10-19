@@ -49,6 +49,20 @@ export async function createdBooking(data: NewBooking): Promise<Booking> {
   return json;
 }
 
+export async function confirmBooking(bookingId: string): Promise<Booking> {
+  const res = await fetch(`${API_URL}/bookings/${bookingId}/confirm`, {
+    method: "PATCH",
+    credentials: "include",
+  });
+
+  const json = await res.json();
+
+  if (!res.ok) {
+    throw new ApiError(json.error ?? "Kunde inte bekräfta", res.status);
+  }
+  return json;
+}
+
 export async function cancelBooking(bookingId: string): Promise<Booking> {
   const res = await fetch(`${API_URL}/bookings/${bookingId}/cancel`, {
     method: "PATCH",
