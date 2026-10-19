@@ -31,7 +31,11 @@ export default function BookingCard({ booking, onUpdated }: Props) {
 
   const [isCancelling, setIsCancelling] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  
+
+  const canCancel =
+    (booking.status === "pending" || booking.status === "confirmed") &&
+    booking.check_in >= getTodayDate();
+    
   return (
     <div className="border border-gray-200 rounded-xl p-4 flex flex-col gap-2">
       <span
