@@ -76,3 +76,26 @@ export async function cancelBooking(bookingId: string): Promise<Booking> {
   }
   return json;
 }
+
+export async function updateBookingGuests(
+  bookingId: string,
+  guests: number,
+): Promise<Booking> {
+  const res = await fetch(`${API_URL}/bookings/${bookingId}/guests`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ guests }),
+  });
+
+  const json = await res.json();
+
+  if (!res.ok) {
+    throw new ApiError(
+      json.error ?? "Kunde inte ändra antal gäster",
+      res.status,
+      Object.fromEntries(json.errors ?? []),
+    );
+  }
+  return json;
+}
