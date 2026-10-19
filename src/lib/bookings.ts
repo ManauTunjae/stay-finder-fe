@@ -26,7 +26,7 @@ export async function getMyBookings(): Promise<Booking[]> {
   if (!res.ok) {
     throw new ApiError(json.error ?? "Kunde inte hämta bokningar", res.status);
   }
-  return json.data;
+  return json;
 }
 
 export async function createdBooking(data: NewBooking): Promise<Booking> {
