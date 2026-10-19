@@ -38,6 +38,11 @@ export default function BookingCard({ booking, onUpdated, isHost }: Props) {
 
   const [isCancelling, setIsCancelling] = useState(false);
   const [isConfirming, setIsConfirming] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [editGuests, setEditGuests] = useState(booking.guests);
+  const [editCheckIn, setEditCheckIn] = useState(booking.check_in);
+  const [editCheckOut, setEditCheckOut] = useState(booking.check_out);
   const [error, setError] = useState<string | null>(null);
 
   const canCancel =
