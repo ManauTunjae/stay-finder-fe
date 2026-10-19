@@ -26,9 +26,12 @@ type Props = {
   onUpdated: (updates: Booking) => void;
 };
 
-export default function BookingCard({ booking }: Props) {
+export default function BookingCard({ booking, onUpdated }: Props) {
   const status = statusInfo[booking.status];
 
+  const [isCancelling, setIsCancelling] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  
   return (
     <div className="border border-gray-200 rounded-xl p-4 flex flex-col gap-2">
       <span
