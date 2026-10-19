@@ -65,6 +65,7 @@ export default function BookingsPage() {
                 key={b.booking_id}
                 booking={b}
                 onUpdated={handleUpdated}
+                isHost={false}
               />
             ))}
           </div>
@@ -80,6 +81,7 @@ export default function BookingsPage() {
                 key={b.booking_id}
                 booking={b}
                 onUpdated={handleUpdated}
+                isHost={true}
               />
             ))}
           </div>
