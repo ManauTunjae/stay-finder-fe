@@ -36,6 +36,8 @@ type Props = {
 export default function BookingCard({ booking, onUpdated, isHost }: Props) {
   const status = statusInfo[booking.status];
 
+  const today = getTodayDate();
+
   const [isCancelling, setIsCancelling] = useState(false);
   const [isConfirming, setIsConfirming] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -107,7 +109,7 @@ export default function BookingCard({ booking, onUpdated, isHost }: Props) {
         );
       }
       onUpdated(latest);
-      setIsEditing(true);
+      setIsEditing(false);
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Något gick fel");
     } finally {
@@ -152,7 +154,69 @@ export default function BookingCard({ booking, onUpdated, isHost }: Props) {
             {isCancelling ? "Avboka..." : "Avboka"}
           </button>
         )}
+
+        {canEdit && !isEditing && (
+          <button
+            onClick={() => setIsEditing(true)}
+            className="border border-gray-400 text-gray-700 hover:bg-gray-50 px-4 py-1.5 rounded-lg text-sm font-semibold cursor-pointer"
+          >
+            Ändra
+          </button>
+        )}
+
       </div>
+        {isEditing && (
+          <div className="flex flex-col gap-3 border-t border-gray-200 pt-3 mt-1">
+            <label className="text-sm font-semibold">
+              Antal gäster
+              <input
+                type="number"
+                min={1}
+                value={editGuests}
+                onChange={(e) => setEditGuests(Number(e.target.value))}
+                className="block w-full border border-gray-300 rounded-lg px-3 py-2 mt-1 font-normal"
+              />
+            </label>
+
+            <label className="text-sm font-semibold">
+              Incheckning
+              <input
+                type="date"
+                min={today}
+                value={editCheckIn}
+                onChange={(e) => setEditCheckIn(e.target.value)}
+                className="block w-full border border-gray-300 rounded-lg px-3 py-2 mt-1 font-normal"
+              />
+            </label>
+
+            <label className="text-sm font-semibold">
+              Utcheckning
+              <input
+                type="date"
+                min={editCheckIn || today}
+                value={editCheckOut}
+                onChange={(e) => setEditCheckOut(e.target.value)}
+                className="block w-full border border-gray-300 rounded-lg px-3 py-2 mt-1 font-normal"
+              />
+            </label>
+
+            <div className="flex gap-2">
+              <button
+                onClick={handleSave}
+                disabled={isSaving}
+                className="bg-blue-900 text-white px-4 py-1.5 rounded-lg text-sm font-semibold cursor-pointer disabled:opacity-50"
+              >
+                {isSaving ? "Sparar..." : "Spara"}
+              </button>
+              <button
+                onClick={() => setIsEditing(false)}
+                className="border border-gray-300 px-4 py-1.5 rounded-lg text-sm cursor-pointer"
+              >
+                Avbryt
+              </button>
+            </div>
+          </div>
+        )}
 
       {error && <p className="text-sm text-red-600">{error}</p>}
     </div>
