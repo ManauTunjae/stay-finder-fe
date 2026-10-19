@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { Booking, BookingStatus } from "@/types/booking";
-import { ApiError, cancelBooking } from "@/lib/bookings";
+import { ApiError, cancelBooking, confirmBooking } from "@/lib/bookings";
 import { getTodayDate } from "@/lib/date";
 
 const statusInfo: Record<BookingStatus, { label: string; className: string }> =
@@ -24,13 +24,14 @@ const statusInfo: Record<BookingStatus, { label: string; className: string }> =
 type Props = {
   booking: Booking;
   onUpdated: (updates: Booking) => void;
-  isHost:  boolean;
+  isHost: boolean;
 };
 
-export default function BookingCard({ booking, onUpdated }: Props) {
+export default function BookingCard({ booking, onUpdated, isHost }: Props) {
   const status = statusInfo[booking.status];
 
   const [isCancelling, setIsCancelling] = useState(false);
+  const [isConfirming, setIsConfirming] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const canCancel =
@@ -50,6 +51,21 @@ export default function BookingCard({ booking, onUpdated }: Props) {
       setError(err instanceof ApiError ? err.message : "Något gick fel");
     } finally {
       setIsCancelling(false);
+    }
+  }
+
+  const canConfirm = isHost && booking.status === "pending";
+
+  async function handleConfirm() {
+    setError(null);
+    setIsConfirming(true);
+    try {
+      const updated = await confirmBooking(booking.booking_id);
+      onUpdated(updated);
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "Något gick fel");
+    } finally {
+      setIsConfirming(false);
     }
   }
 
