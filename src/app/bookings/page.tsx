@@ -20,4 +20,17 @@ export default function BookingsPage() {
         .catch(() => setError("Kunde inte hämta bokningar"))
         .finally(() => setIsFetching(false))
   }, [user, isLoading]);
+
+  if(isLoading) {
+    return <p className="p-4">Laddar...</p>
+  }
+
+  if(!user) {
+    return (
+        <div className="p-4 text-center flex flex-col items-center gap-3 py-20">
+            <p>Du måste logga in för att se dina bokningar.</p>
+            <button onClick={() => openAuthModal("login")} className="bg-blue-900 text-white px-6 py-2 rounded-lg font-semibold cursor-pointer">Logga in</button>
+        </div>
+    )
+  }
 }
