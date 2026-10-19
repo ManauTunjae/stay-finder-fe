@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { Booking, BookingStatus } from "@/types/booking";
-import { cancelBooking } from "@/lib/bookings";
+import { ApiError, cancelBooking } from "@/lib/bookings";
 import { getTodayDate } from "@/lib/date";
 
 const statusInfo: Record<BookingStatus, { label: string; className: string }> =
@@ -35,7 +35,23 @@ export default function BookingCard({ booking, onUpdated }: Props) {
   const canCancel =
     (booking.status === "pending" || booking.status === "confirmed") &&
     booking.check_in >= getTodayDate();
-    
+
+  async function handleCancel() {
+    if (!window.confirm("Vill du verkligen avboka?")) return;
+
+    setError(null);
+    setIsCancelling(true);
+
+    try {
+      const updated = await cancelBooking(booking.booking_id);
+      onUpdated(updated);
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "Något gick fel");
+    } finally {
+      setIsCancelling(false);
+    }
+  }
+
   return (
     <div className="border border-gray-200 rounded-xl p-4 flex flex-col gap-2">
       <span
