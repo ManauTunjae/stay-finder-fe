@@ -100,4 +100,26 @@ export async function updateBookingGuests(
   return json;
 }
 
+export async function updateBookingDates(
+  bookingId: string,
+  checkIn: string,
+  checkOut: string,
+): Promise<Booking> {
+  const res = await fetch(`${API_URL}/bookings/${bookingId}/dates`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ check_in: checkIn, check_out: checkOut }),
+  });
 
+  const json = await res.json();
+
+  if (!res.ok) {
+    throw new ApiError(
+      json.error ?? "Kunde inte ändra datumet",
+      res.status,
+      Object.fromEntries(json.errors ?? []),
+    );
+  }
+  return json;
+}
