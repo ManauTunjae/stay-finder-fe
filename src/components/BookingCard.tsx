@@ -1,4 +1,9 @@
+"use client";
+
+import { useState } from "react";
 import type { Booking, BookingStatus } from "@/types/booking";
+import { cancelBooking } from "@/lib/bookings";
+import { getTodayDate } from "@/lib/date";
 
 const statusInfo: Record<BookingStatus, { label: string; className: string }> =
   {
