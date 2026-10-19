@@ -20,4 +20,25 @@ type Props = {
   booking: Booking;
 };
 
-export default function BookingCard({ booking }: Props) {}
+export default function BookingCard({ booking }: Props) {
+  const status = statusInfo[booking.status];
+
+  return (
+    <div className="border border-gray-200 rounded-xl p-4 flex flex-col gap-2">
+      <span
+        className={`self-start text-xs font-semibold px-2 py-1 rounded-md ${status.className}`}
+      >
+        {status.label}
+      </span>
+      <p className="text-sm">Namn: {booking.guest_name}</p>
+      <p className="text-sm">E-post: {booking.guest_email}</p>
+      <p className="text-sm">
+        Datum: {booking.check_in} – {booking.check_out}
+      </p>
+      <p className="text-sm">Antal gäster: {booking.guests}</p>
+      <p className="font-bold">
+        Totalt {booking.total_price.toLocaleString("sv-SE")} SEK
+      </p>
+    </div>
+  );
+}
