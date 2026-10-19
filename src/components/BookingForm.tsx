@@ -4,7 +4,7 @@ import { useState } from "react";
 import { X } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { calculateNights, getTodayDate } from "@/lib/date";
-import { createBooking, ApiError } from "@/lib/bookings";
+import { createdBooking, ApiError } from "@/lib/bookings";
 import type { Booking } from "@/types/booking";
 
 type Props = {
@@ -45,7 +45,7 @@ export default function BookingForm({
     setIsSubmitting(true);
 
     try {
-      const newBooking = await createBooking({
+      const newBooking = await createdBooking({
         property_id: propertyId,
         guest_name: guestName,
         guest_email: guestEmail,
@@ -54,7 +54,16 @@ export default function BookingForm({
         guests: maxGuests,
       });
       setBooking(newBooking);
-    } catch (error) {}
+    } catch (err) {
+      if (err instanceof ApiError) {
+        setError(err.message);
+        setFieldErrors({});
+      } else {
+        setError("Något gick fel");
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
