@@ -53,6 +53,7 @@ export default function BookingForm({
         check_out: checkOut,
         guests: maxGuests,
       });
+      setBooking(newBooking);
     } catch (error) {}
   }
 
