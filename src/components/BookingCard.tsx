@@ -86,15 +86,27 @@ export default function BookingCard({ booking, onUpdated, isHost }: Props) {
         Totalt {booking.total_price.toLocaleString("sv-SE")} SEK
       </p>
 
-      {canCancel && (
-        <button
-          onClick={handleCancel}
-          disabled={isCancelling}
-          className="self-start border boder-red-600 text-red-600 hover:bg-red-50 px-4 py-1.5 rounded-lg text-sm font-semibold cursor-pointer disabled:opacity-50"
-        >
-          {isCancelling ? "Avboka..." : "Avboka"}
-        </button>
-      )}
+      <div className="flex gap-2">
+        {canConfirm && (
+          <button
+            onClick={handleConfirm}
+            disabled={isConfirming}
+            className="bg-green-600 hover:bg-green-700 text-white px-4 py-1.5 rounded-lg text-sm font-semibold cursor-pointer disabled:opacity-50"
+          >
+            {isConfirming ? "Bekräfta..." : "Bekräfta"}
+          </button>
+        )}
+
+        {canCancel && (
+          <button
+            onClick={handleCancel}
+            disabled={isCancelling}
+            className="bg-red-600 hover:bg-red-700 text-white px-4 py-1.5 rounded-lg text-sm font-semibold cursor-pointer disabled:opacity-50"
+          >
+            {isCancelling ? "Avboka..." : "Avboka"}
+          </button>
+        )}
+      </div>
 
       {error && <p className="text-sm text-red-600">{error}</p>}
     </div>
