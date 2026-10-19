@@ -4,6 +4,8 @@ import { useState } from "react";
 import { X } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { calculateNights, getTodayDate } from "@/lib/date";
+import { createBooking, ApiError } from "@/lib/bookings";
+import type { Booking } from "@/types/booking";
 
 type Props = {
   propertyId: string;
@@ -26,10 +28,33 @@ export default function BookingForm({
   const [guestName, setGuestName] = useState("");
   const [guestEmail, setGuestEmail] = useState(user?.email ?? "");
 
+  const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [booking, setBooking] = useState<Booking | null>(null);
+
   const nights = checkIn && checkOut ? calculateNights(checkIn, checkOut) : 0;
   const totalPrice = nights > 0 ? nights * pricePerNight : 0;
 
   const today = getTodayDate();
+
+  async function handleSubmit(e: React.SubmitEvent) {
+    e.preventDefault();
+    setError(null);
+    setFieldErrors({});
+    setIsSubmitting(true);
+
+    try {
+      const newBooking = await createBooking({
+        property_id: propertyId,
+        guest_name: guestName,
+        guest_email: guestEmail,
+        check_in: checkIn,
+        check_out: checkOut,
+        guests: maxGuests,
+      });
+    } catch (error) {}
+  }
 
   return (
     <div
