@@ -68,6 +68,18 @@ export default function BookingCard({ booking, onUpdated }: Props) {
       <p className="font-bold">
         Totalt {booking.total_price.toLocaleString("sv-SE")} SEK
       </p>
+
+      {canCancel && (
+        <button
+          onClick={handleCancel}
+          disabled={isCancelling}
+          className="self-start border boder-red-600 text-red-600 hover:bg-red-50 px-4 py-1.5 rounded-lg text-sm font-semibold cursor-pointer disabled:opacity-50"
+        >
+          {isCancelling ? "Avboka..." : "Avboka"}
+        </button>
+      )}
+
+      {error && <p className="text-sm text-red-600">{error}</p>}
     </div>
   );
 }
