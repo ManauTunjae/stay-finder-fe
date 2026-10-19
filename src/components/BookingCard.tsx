@@ -24,6 +24,7 @@ const statusInfo: Record<BookingStatus, { label: string; className: string }> =
 type Props = {
   booking: Booking;
   onUpdated: (updates: Booking) => void;
+  isHost:  boolean;
 };
 
 export default function BookingCard({ booking, onUpdated }: Props) {
