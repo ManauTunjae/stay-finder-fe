@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { Menu, X, User, Search, BuildingComplexPlus } from "lucide-react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 const navLinks = [
@@ -13,6 +14,17 @@ const navLinks = [
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const { user, isLoading, openAuthModal, logoutUser } = useAuth();
+  const pathname = usePathname();
+
+  function iconClass(href: string) {
+    const isActive = pathname === href;
+
+    return `hidden md:flex items-center justify-center w-10 h-10 rounded-full cursor-pointer ${
+      isActive
+        ? "bg-blue-900 text-white"
+        : "bg-gray-300 text-gray-700 hover:bg-white"
+    }`;
+  }
 
   return (
     <header className="relative flex justify-between items-center bg-blue-200/50 px-4 md:px-10 py-3">
@@ -24,17 +36,19 @@ export default function Header() {
       <div className="flex items-center gap-2">
         {user ? (
           <Link
-            href="/auth/register"
-            className="bg-gray-300 hidden md:block px-4 py-2 rounded-full hover:bg-white text-sm font-medium"
+            href="/properties/new"
+            aria-label="Skapa boende"
+            className={iconClass("/properties/new")}
           >
-            <BuildingComplexPlus />
+            <BuildingComplexPlus className="w-6 h-6" />
           </Link>
         ) : (
           <button
             onClick={() => openAuthModal("login")}
-            className="bg-gray-300 hidden md:block px-4 py-2 rounded-full hover:bg-white text-sm font-medium cursor-pointer"
+            aria-label="Logga in"
+            className={iconClass("")}
           >
-            <BuildingComplexPlus />
+            <BuildingComplexPlus className="w-6 h-6" />
           </button>
         )}
 
@@ -42,25 +56,26 @@ export default function Header() {
           <Link
             href="/bookings"
             aria-label="Mina bokningar"
-            className="bg-gray-300 hidden md:block px-4 py-2 rounded-full hover:bg-white text-sm font-medium cursor-pointer"
+            className={iconClass("/bookings")}
           >
-            <User />
+            <User className="w-6 h-6" />
           </Link>
         ) : (
           <button
             onClick={() => openAuthModal("login")}
-            aria-label="Min profil"
-            className="bg-gray-300 hidden md:block px-4 py-2 rounded-full hover:bg-white text-sm font-medium cursor-pointer"
+            aria-label="Logga in"
+            className={iconClass("")}
           >
-            <User />
+            <User className="w-6 h-6" />
           </button>
         )}
 
         <Link
           href="/search"
-          className="bg-gray-300 hidden md:block px-4 py-2 rounded-full hover:bg-white text-sm font-medium cursor-pointer"
+          aria-label="Sök boenden"
+          className={iconClass("/search")}
         >
-          <Search />
+          <Search className="w-6 h-6" />
         </Link>
 
         <button
@@ -96,7 +111,7 @@ export default function Header() {
                 onClick={() => setIsOpen(false)}
                 className="px-4 py-2 hover:bg-gray-100 rounded-lg text-sm"
               >
-                Mina Bokningar
+                Mina bokningar
               </Link>
               <button
                 onClick={() => {
