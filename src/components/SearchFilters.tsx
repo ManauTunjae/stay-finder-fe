@@ -117,7 +117,7 @@ export default function SearchFilters({
       <div className="col-span-2 flex gap-2">
         <button
           type="submit"
-          className="bg-green-600 text-white px-5 py-2 rounded-lg font-semibold cursor-pointer"
+          className="bg-blue-600 text-white px-5 py-2 rounded-lg font-semibold cursor-pointer"
         >
           Sök
         </button>

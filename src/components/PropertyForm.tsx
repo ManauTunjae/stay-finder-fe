@@ -193,7 +193,7 @@ export default function PropertyForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="bg-blue-900 hover:bg-blue-800 text-white font-semibold py-2 rounded-lg cursor-pointer disabled:opacity-50"
+        className="bg-blue-600 hover:bg-blue-800 text-white font-semibold py-2 rounded-lg cursor-pointer disabled:opacity-50"
       >
         {isSubmitting ? "Skapar..." : "Skapa boende"}
       </button>
