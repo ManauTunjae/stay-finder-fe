@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { Menu, X, User } from "lucide-react";
+import { Menu, X, User, Search, BuildingComplexPlus } from "lucide-react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 const navLinks = [
@@ -13,9 +14,48 @@ const navLinks = [
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const { user, isLoading, openAuthModal, logoutUser } = useAuth();
+  const pathname = usePathname();
+  const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    function handleClickOutside(e: MouseEvent | TouchEvent) {
+      if (headerRef.current && !headerRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+
+    function handleScroll() {
+      setIsOpen(false);
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isOpen]);
+
+  function iconClass(href: string) {
+    const isActive = pathname === href;
+
+    return `hidden md:flex items-center justify-center w-10 h-10 rounded-full cursor-pointer ${
+      isActive
+        ? "bg-blue-900 text-white"
+        : "bg-gray-300 text-gray-700 hover:bg-white"
+    }`;
+  }
 
   return (
-    <header className="relative flex justify-between items-center bg-blue-200/50 px-4 md:px-10 py-3">
+    <header
+      ref={headerRef}
+      className="relative flex justify-between items-center bg-blue-200/50 px-4 md:px-10 py-3"
+    >
       <Link href="/" className="font-sans text-gray-900 text-2xl font-bold">
         StayFinder
       </Link>
@@ -24,37 +64,47 @@ export default function Header() {
       <div className="flex items-center gap-2">
         {user ? (
           <Link
-            href="/auth/register"
-            className="bg-gray-300 hidden md:block px-4 py-2 rounded-full hover:bg-white text-sm font-medium"
+            href="/properties/new"
+            aria-label="Skapa boende"
+            className={iconClass("/properties/new")}
           >
-            Skapa boende
+            <BuildingComplexPlus className="w-6 h-6" />
           </Link>
         ) : (
           <button
             onClick={() => openAuthModal("login")}
-            className="bg-gray-300 hidden md:block px-4 py-2 rounded-full hover:bg-white text-sm font-medium cursor-pointer"
+            aria-label="Logga in"
+            className={iconClass("")}
           >
-            Skapa boenden
+            <BuildingComplexPlus className="w-6 h-6" />
           </button>
         )}
 
         {user ? (
           <Link
-            href="/auth/register"
-            aria-label="Min profil"
-            className="bg-gray-300 hidden md:block p-1 rounded-2xl hover:bg-white w-8 h-8 text-gray-700"
+            href="/bookings"
+            aria-label="Mina bokningar"
+            className={iconClass("/bookings")}
           >
-            <User />
+            <User className="w-6 h-6" />
           </Link>
         ) : (
           <button
             onClick={() => openAuthModal("login")}
-            aria-label="Min profil"
-            className="bg-gray-300 hidden md:block px-4 py-2 rounded-full hover:bg-white text-sm font-medium cursor-pointer"
+            aria-label="Logga in"
+            className={iconClass("")}
           >
-            <User />
+            <User className="w-6 h-6" />
           </button>
         )}
+
+        <Link
+          href="/search"
+          aria-label="Sök boenden"
+          className={iconClass("/search")}
+        >
+          <Search className="w-6 h-6" />
+        </Link>
 
         <button
           aria-label="Öppna meny"
@@ -65,67 +115,72 @@ export default function Header() {
         </button>
       </div>
 
-      {isOpen && (
-        <nav className="absolute right-4 md:right-10 top-full mt-2 w-64 z-10 bg-white flex flex-col gap-3 p-4 rounded-2xl shadow-lg">
-          {navLinks.map((l) => (
+      <nav
+        inert={!isOpen}
+        className={`absolute right-4 md:right-10 top-full mt-2 w-64 z-10 bg-white flex flex-col gap-3 p-4 rounded-2xl shadow-lg origin-top-right transition-all duration-500 ${
+          isOpen
+            ? "opacity-100 scale-100"
+            : "opacity-0 scale-95 pointer-events-none"
+        }`}
+      >
+        {navLinks.map((l) => (
+          <Link
+            key={l.href}
+            href={l.href}
+            onClick={() => setIsOpen(false)}
+            className="px-4 py-3 hover:bg-gray-100 text-sm"
+          >
+            {l.label}
+          </Link>
+        ))}
+
+        <hr className="my-2 border-gray-200" />
+
+        {isLoading ? null : user ? (
+          // Inloggad
+          <>
+            <p className="px-4 py-2 text-xs text-gray-500">{user.email}</p>
             <Link
-              key={l.href}
-              href={l.href}
+              href="/bookings"
               onClick={() => setIsOpen(false)}
-              className="px-4 py-3 hover:bg-gray-100 text-sm"
+              className="px-4 py-2 hover:bg-gray-100 rounded-lg text-sm"
             >
-              {l.label}
+              Mina bokningar
             </Link>
-          ))}
-
-          <hr className="my-2 border-gray-200" />
-
-          {isLoading ? null : user ? (
-            // Inloggad
-            <>
-              <p className="px-4 py-2 text-xs text-gray-500">{user.email}</p>
-              <Link
-                href="/bookings"
-                onClick={() => setIsOpen(false)}
-                className="px-4 py-2 hover:bg-gray-100 rounded-lg text-sm"
-              >
-                Mina Bokningar
-              </Link>
-              <button
-                onClick={() => {
-                  logoutUser();
-                  setIsOpen(false);
-                }}
-                className="px-4 py-3 hover:bg-gray-100 rounded-lg text-sm text-left cursor-pointer"
-              >
-                Logga ut
-              </button>
-            </>
-          ) : (
-            // Utloggad
-            <>
-              <button
-                onClick={() => {
-                  openAuthModal("login");
-                  setIsOpen(false);
-                }}
-                className="px-4 py-3 hover:bg-gray-100 rounded-lg text-sm text-left cursor-pointer"
-              >
-                Logga in
-              </button>
-              <button
-                onClick={() => {
-                  openAuthModal("register");
-                  setIsOpen(false);
-                }}
-                className="px-4 py-3 hover:bg-gray-100 rounded-lg text-sm text-left cursor-pointer"
-              >
-                Bli medlem
-              </button>
-            </>
-          )}
-        </nav>
-      )}
+            <button
+              onClick={() => {
+                logoutUser();
+                setIsOpen(false);
+              }}
+              className="px-4 py-3 hover:bg-gray-100 rounded-lg text-sm text-left cursor-pointer"
+            >
+              Logga ut
+            </button>
+          </>
+        ) : (
+          // Utloggad
+          <>
+            <button
+              onClick={() => {
+                openAuthModal("login");
+                setIsOpen(false);
+              }}
+              className="px-4 py-3 hover:bg-gray-100 rounded-lg text-sm text-left cursor-pointer"
+            >
+              Logga in
+            </button>
+            <button
+              onClick={() => {
+                openAuthModal("register");
+                setIsOpen(false);
+              }}
+              className="px-4 py-3 hover:bg-gray-100 rounded-lg text-sm text-left cursor-pointer"
+            >
+              Bli medlem
+            </button>
+          </>
+        )}
+      </nav>
     </header>
   );
 }

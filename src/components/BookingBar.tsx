@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
+import BookingForm from "@/components/BookingForm";
 
 type Props = {
   propertyId: string;
@@ -51,9 +52,12 @@ export default function BookingBar({
         )}
       </div>
       {isFormOpen && (
-        <p className="p-4 text-center">
-          Formuläret kommer här för boende {propertyId}
-        </p>
+        <BookingForm
+          propertyId={propertyId}
+          pricePerNight={pricePerNight}
+          maxGuests={maxGuests}
+          onClose={() => setIsFormOpen(false)}
+        />
       )}
     </div>
   );
