@@ -10,6 +10,7 @@ type Props = {
   initialMaxPrice?: string;
   initialGuests?: string;
   initialSortOrder?: string;
+  initialQ?: string;
 };
 
 export default function SearchFilters({
@@ -18,6 +19,7 @@ export default function SearchFilters({
   initialMaxPrice,
   initialGuests,
   initialSortOrder,
+  initialQ,
 }: Props) {
   const router = useRouter();
 
@@ -25,6 +27,7 @@ export default function SearchFilters({
   const [maxPrice, setMaxPrice] = useState(initialMaxPrice ?? "");
   const [guests, setGuests] = useState(initialGuests ?? "");
   const [sortOrder, setSortOrder] = useState(initialSortOrder ?? "");
+  const [q, setQ] = useState(initialQ ?? "");
 
   function handleSubmit(e: React.SubmitEvent) {
     e.preventDefault();
@@ -33,6 +36,7 @@ export default function SearchFilters({
     if (maxPrice) query.set("max_price", maxPrice);
     if (guests) query.set("max_guests", guests);
     if (sortOrder) query.set("sort_order", sortOrder);
+    if (q.trim()) query.set("q", q.toString());
 
     router.push(`/search?${query.toString()}`);
   }
@@ -46,6 +50,18 @@ export default function SearchFilters({
       onSubmit={handleSubmit}
       className="bg-gray-50 border border-gray-200 rounded-2xl p-4 mb-6 grid grid-cols-2 gap-3 md:flex md:items-end"
     >
+      <label className="text-sm font-semibold col-span-2 md:flex-1">
+        Sök
+        <input
+          type="search"
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="t.ex. villa, loft, Södermalm"
+          maxLength={80}
+          className="block w-full h-11 border border-gray-300 rounded-lg px-3 mt-1 font-normal bg-white"
+        />
+      </label>
+
       <label className="text-sm font-semibold md:flex-1">
         Stad
         <select
