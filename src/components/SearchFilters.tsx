@@ -7,32 +7,36 @@ type Props = {
   cities: string[];
   initialCity?: string;
   initialMaxPrice?: string;
-  intialGuests?: string;
+  initialGuests?: string;
   initialSortOrder?: string;
 };
 
 export default function SearchFilters({
-    cities.
-    initialCity,
-    initialMaxPrice,
-    initialGuests,
-    initialSortOrder,
+  cities,
+  initialCity,
+  initialMaxPrice,
+  initialGuests,
+  initialSortOrder,
 }: Props) {
-    const router = useRouter();
+  const router = useRouter();
 
-    const [city, setCity] = useState(initialCity ?? "");
-    const [maxPrice, setMaxPrice] = useState(initialMaxPrice ?? "");
-    const [guests, setGuests] = useState(initialGuests ?? "");
-    const [sortOrder, setSortOrder] = useState(initialSortOrder ?? "")
+  const [city, setCity] = useState(initialCity ?? "");
+  const [maxPrice, setMaxPrice] = useState(initialMaxPrice ?? "");
+  const [guests, setGuests] = useState(initialGuests ?? "");
+  const [sortOrder, setSortOrder] = useState(initialSortOrder ?? "");
 
-    function handleSubmit(e: React.SubmitEvent) {
-        e.preventDefault();
-        const query = new URLSearchParams();
-        if (city) query.set("city", city);
-        if (maxPrice) query.set("max_price", maxPrice);
-        if (guests) query.set("max_guests", guests);
-        if (sortOrder) query.set("sort_order", sortOrder);
+  function handleSubmit(e: React.SubmitEvent) {
+    e.preventDefault();
+    const query = new URLSearchParams();
+    if (city) query.set("city", city);
+    if (maxPrice) query.set("max_price", maxPrice);
+    if (guests) query.set("max_guests", guests);
+    if (sortOrder) query.set("sort_order", sortOrder);
 
-        router.push(`/search${query.toString()}`);
-    }
+    router.push(`/search?${query.toString()}`);
+  }
+
+  function handleClear() {
+    router.push("/search");
+  }
 }
