@@ -17,4 +17,10 @@ export default function PropertyForm() {
   const [price, setPrice] = useState("");
   const [maxGuests, setMaxGuests] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+
+  const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  
 }
