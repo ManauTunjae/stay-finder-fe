@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { formatWithOptions } from "util";
 
 type Props = {
   cities: string[];
