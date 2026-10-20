@@ -3,26 +3,23 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="relative h-[60vh] min-h-[360px] md:h-[70vh] overflow-hidden">
-      {/* 1. Bilden */}
+    <section className="relative h-[40vh] min-h-[280px] md:h-[50vh] overflow-hidden">
       <Image
-        src="/hero.jpg"
+        src="/stockholm.jpg"
         alt="Stockholms stadshus i skymningen"
         fill
         priority
-        sizes="50vw"
+        sizes="100vw"
         className="object-cover"
       />
 
-      {/* 2. Mörk slöja, så texten syns */}
       <div className="absolute inset-0 bg-black/30" />
 
-      {/* 3. Texten och knappen */}
       <div className="relative z-10 h-full flex flex-col items-center justify-center text-center text-white px-4 gap-4">
         <h1 className="text-3xl md:text-5xl font-bold">
-          Hitta ditt nästa boende i Sverige
+          Hitta ditt nästa boende med StayFinder
         </h1>
-        <p className="text-base md:text-lg max-w-xl">
+        <p className="text-base md:text-lg max-w-xl font-semibold">
           Stugor, villor och lägenheter, från storstad till skärgård.
         </p>
         <Link
@@ -32,10 +29,8 @@ export default function Hero() {
           Sök boenden
         </Link>
       </div>
-
-      {/* 4. Tack till fotografen */}
       <p className="absolute bottom-2 right-3 z-10 text-xs text-white/70">
-        Foto: time lapse / Unsplash
+        Foto: StayFinder
       </p>
     </section>
   );
