@@ -55,7 +55,7 @@ export default function Header() {
   return (
     <header
       ref={headerRef}
-      className="relative z-40 flex justify-between items-center bg-blue-200/50 px-4 md:px-10 py-3"
+      className="relative z-40 flex justify-between items-center bg-gray-200/80 px-4 md:px-10 py-3"
     >
       <Link href="/" className="font-sans text-3xl font-bold">
         <span className="text-blue-600">Stay</span>
