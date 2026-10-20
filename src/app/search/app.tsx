@@ -24,6 +24,18 @@ export default async function SearchPage({ searchParams }: Props) {
   const properties = await getProperties(query);
 
   return (
-    
-  )
+    <div className="p-4 md:px-10 md:py-8">
+      <h1 className="text-2xl font-bold mb-6">Sök boenden</h1>
+      <p className="text-gray-500 mb-6">{properties.length} boenden</p>
+      {properties.length === 0 ? (
+        <p className="text-gray-500">Hitta inga boenden</p>
+      ) : (
+        <div className="flex flex-wrap gap-4 md:gap-6">
+          {properties.map((p) => (
+            <PropertyCard key={p.property_id} property={p} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
 }
