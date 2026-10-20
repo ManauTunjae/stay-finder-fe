@@ -17,10 +17,15 @@ export default async function Home() {
           key={c}
           title={c}
           properties={properties.filter((p) => p.city === c)}
+          href={`/search?city=${encodeURIComponent(c)}`}
         />
       ))}
 
-      <PropertyRow title="Alla boenden" properties={properties} />
+      <PropertyRow
+        title="Alla boenden"
+        properties={properties}
+        href="/search"
+      />
     </main>
   );
 }
