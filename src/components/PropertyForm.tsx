@@ -52,5 +52,151 @@ export default function PropertyForm() {
     }
   }
 
-  const inputClass = "block w-full border border-gray-300 rounded-lg px-3 py-2 mt-1 font-normal";
+  const inputClass =
+    "block w-full border border-gray-300 rounded-lg px-3 py-2 mt-1 font-normal";
+
+  return (
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <label className="text-sm font-semibold">
+        Titel
+        <input
+          type="text"
+          required
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className={inputClass}
+        />
+        {fieldErrors.title && (
+          <span className="block text-xs text-red-600 mt-1">
+            {fieldErrors.title}
+          </span>
+        )}
+      </label>
+
+      <label className="text-sm font-semibold">
+        Beskrivning
+        <textarea
+          required
+          rows={4}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          className={inputClass}
+        />
+        {fieldErrors.description && (
+          <span className="block text-xs text-red-600 mt-1">
+            {fieldErrors.description}
+          </span>
+        )}
+      </label>
+
+      <label className="text-sm font-semibold">
+        Typ av boende
+        <select
+          value={kind}
+          onChange={(e) => setKind(e.target.value as NewProperty["kind"])}
+          className={inputClass}
+        >
+          <option value="apartment">Lägenhet</option>
+          <option value="villa">Villa</option>
+        </select>
+      </label>
+
+      <label className="text-sm font-semibold">
+        Stad
+        <input
+          type="text"
+          required
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          className={inputClass}
+        />
+        {fieldErrors.city && (
+          <span className="block text-xs text-red-600 mt-1">
+            {fieldErrors.city}
+          </span>
+        )}
+      </label>
+
+      <label className="text-sm font-semibold">
+        Land
+        <input
+          type="text"
+          required
+          value={country}
+          onChange={(e) => setCountry(e.target.value)}
+          className={inputClass}
+        />
+        {fieldErrors.country && (
+          <span className="block text-xs text-red-600 mt-1">
+            {fieldErrors.country}
+          </span>
+        )}
+      </label>
+
+      <label className="text-sm font-semibold">
+        Pris per natt
+        <input
+          type="number"
+          required
+          value={price}
+          min={1}
+          onChange={(e) => setPrice(e.target.value)}
+          className={inputClass}
+        />
+        {fieldErrors.price && (
+          <span className="block text-xs text-red-600 mt-1">
+            {fieldErrors.price_per_night}
+          </span>
+        )}
+      </label>
+
+      <label className="text-sm font-semibold">
+        Max antal gäster
+        <input
+          type="number"
+          required
+          value={maxGuests}
+          min={1}
+          onChange={(e) => setMaxGuests(e.target.value)}
+          className={inputClass}
+        />
+        {fieldErrors.maxGuests && (
+          <span className="block text-xs text-red-600 mt-1">
+            {fieldErrors.max_guests}
+          </span>
+        )}
+      </label>
+
+      <label className="text-sm font-semibold">
+        Bildlänk (valfri)
+        <input
+          type="url"
+          value={imageUrl}
+          onChange={(e) => setImageUrl(e.target.value)}
+          placeholder="https://images.unsplash.com/..."
+          className={inputClass}
+        />
+        <span className="block text-xs text-gray-500 font-normal mt-1">
+          Använd en bild från Unsplash eller iStock.
+        </span>
+        {fieldErrors.image_url && (
+          <span className="block text-xs text-red-600 mt-1">
+            {fieldErrors.image_url}
+          </span>
+        )}
+      </label>
+
+      {error && (
+        <p className="bg-red-50 text-red-700 text-sm rounded-lg p-3">{error}</p>
+      )}
+
+      <button
+        type="submit"
+        disabled={isSubmitting}
+        className="bg-blue-900 hover:bg-blue-800 text-white font-semibold py-2 rounded-lg cursor-pointer disabled:opacity-50"
+      >
+        {isSubmitting ? "Skapar..." : "Skapa boende"}
+      </button>
+    </form>
+  );
 }
