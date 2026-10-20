@@ -22,5 +22,35 @@ export default function PropertyForm() {
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  
+  async function handleSubmit(e: React.SubmitEvent) {
+    e.preventDefault();
+    setError(null);
+    setFieldErrors({});
+    setIsSubmitting(true);
+
+    try {
+      const newProperty = await createProperty({
+        title,
+        description,
+        city,
+        country,
+        kind,
+        price_per_night: Number(price),
+        max_guests: Number(maxGuests),
+        image_url: imageUrl.trim() || undefined,
+      });
+      router.push(`/properties/${newProperty.property_id}`);
+    } catch (err) {
+      if (err instanceof ApiError) {
+        setError(err.message);
+        setFieldErrors(err.fieldErrors);
+      } else {
+        setError("Något gick fel");
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
+  const inputClass = "block w-full border border-gray-300 rounded-lg px-3 py-2 mt-1 font-normal";
 }
