@@ -17,8 +17,12 @@ export default function Hero() {
 
       <div className="relative z-10 h-full flex flex-col items-center justify-center text-center text-white px-4 gap-4">
         <h1 className="text-3xl md:text-5xl font-bold">
-          Hitta ditt nästa boende med StayFinder
+          <span className="text-blue-700"> Stay</span>
+          <span className="text-orange-600">Finder</span>
         </h1>
+        <h2 className="text-3xl md:text-5xl font-bold">
+          Hitta ditt nästa boende
+        </h2>
         <p className="text-base md:text-lg max-w-xl font-semibold">
           Stugor, villor och lägenheter, från storstad till skärgård.
         </p>
