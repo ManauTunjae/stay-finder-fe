@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
-import ButtomNav from "@/components/BottomNav";
+import BottomNav from "@/components/BottomNav";
 import Footer from "@/components/Footer";
 import { AuthProvider } from "@/context/AuthContext";
 import AuthModal from "@/components/AuthModal";
@@ -26,17 +26,22 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="en"
+      lang="sv"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <AuthProvider>
-          <Header />
+          <Suspense fallback={<div className="h-16 bg-blue-200/50" />}>
+            <Header />
+          </Suspense>
+
           <main className="flex-1 pb-20 md:pb-0">{children}</main>
           <Footer />
+
           <Suspense fallback={null}>
-            <ButtomNav />
+            <BottomNav />
           </Suspense>
+
           <AuthModal />
         </AuthProvider>
       </body>
