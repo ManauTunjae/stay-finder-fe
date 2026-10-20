@@ -44,14 +44,14 @@ export default function SearchFilters({
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col md:flex-row md:items-end gap-3 mb-6"
+      className="bg-gray-50 border border-gray-200 rounded-2xl p-4 mb-6 grid grid-cols-2 gap-3 md:flex md:items-end"
     >
-      <label className="text-sm font-semibold">
+      <label className="text-sm font-semibold md:flex-1">
         Stad
         <select
           value={city}
           onChange={(e) => setCity(e.target.value)}
-          className="block w-full border border-gray-300 rounded-lg px-3 py-2 mt-1 font-normal"
+          className="bblock w-full h-11 border border-gray-300 rounded-lg px-3 mt-1 font-normal bg-white"
         >
           <option value="">Alla Städer</option>
           {cities.map((c) => (
@@ -62,7 +62,7 @@ export default function SearchFilters({
         </select>
       </label>
 
-      <label className="text-sm font-semibold">
+      <label className="text-sm font-semibold md:flex-1">
         Maxpris per natt
         <input
           type="number"
@@ -70,11 +70,11 @@ export default function SearchFilters({
           value={maxPrice}
           onChange={(e) => setMaxPrice(e.target.value)}
           placeholder="t.ex. 2000"
-          className="block w-full border border-gray-300 rounded-lg px-3 py-2 mt-1 font-normal"
+          className="block w-full h-11 border border-gray-300 rounded-lg px-3 mt-1 font-normal bg-white"
         />
       </label>
 
-      <label className="text-sm font-semibold">
+      <label className="text-sm font-semibold md:flex-1">
         Antal gäster
         <input
           type="number"
@@ -82,16 +82,16 @@ export default function SearchFilters({
           value={guests}
           onChange={(e) => setGuests(e.target.value)}
           placeholder="1"
-          className="block w-full border border-gray-300 rounded-lg px-3 py-2 mt-1 font-normal"
+          className="block w-full h-11 border border-gray-300 rounded-lg px-3 mt-1 font-normal bg-white"
         />
       </label>
 
-      <label className="text-sm font-semibold">
+      <label className="text-sm font-semibold md:flex-1">
         Sortera
         <select
           value={sortOrder}
           onChange={(e) => setSortOrder(e.target.value)}
-          className="block w-full border border-gray-300 rounded-lg px-3 py-2 mt-1 font-normal"
+          className="block w-full h-11 border border-gray-300 rounded-lg px-3 mt-1 font-normal bg-white"
         >
           <option value="">Ingen sortering</option>
           <option value="asc">Pris: lägst först</option>
@@ -99,17 +99,17 @@ export default function SearchFilters({
         </select>
       </label>
 
-      <div className="flex gap-2">
+      <div className="col-span-2 flex gap-2">
         <button
           type="submit"
-          className="bg-blue-900 text-white px-5 py-2 rounded-lg font-semibold cursor-pointer"
+          className="bg-green-700 text-white px-5 py-2 rounded-lg font-semibold cursor-pointer"
         >
           Sök
         </button>
         <button
           type="button"
           onClick={handleClear}
-          className="border border-gray-300 px-5 py-2 rounded-lg cursor-pointer"
+          className="bg-gray-500 text-white px-5 py-2 rounded-lg font-semibold cursor-pointer"
         >
           Rensa
         </button>
