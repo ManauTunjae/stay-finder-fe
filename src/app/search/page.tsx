@@ -1,6 +1,7 @@
 import { getProperties } from "@/lib/api";
 import PropertyCard from "@/components/PropertyCard";
 import type { PropertyQuery } from "@/types/property";
+import SearchFilters from "@/components/SearchFilters";
 
 type Props = {
   searchParams: Promise<{ [key: string]: string | undefined }>;
@@ -23,9 +24,20 @@ export default async function SearchPage({ searchParams }: Props) {
 
   const properties = await getProperties(query);
 
+  const allProperties = await getProperties({ limit: 50 });
+  const cities = [...new Set(allProperties.map((p) => p.city))].sort();
+
   return (
     <div className="p-4 md:px-10 md:py-8">
       <h1 className="text-2xl font-bold mb-6">Sök boenden</h1>
+      <SearchFilters
+        key={JSON.stringify(params)}
+        cities={cities}
+        initialCity={params.city}
+        initialMaxPrice={params.max_price}
+        initialGuests={params.max_guests}
+        initialSortOrder={params.sort_order}
+      />
       <p className="text-gray-500 mb-6">{properties.length} boenden</p>
       {properties.length === 0 ? (
         <p className="text-gray-500">Hitta inga boenden</p>
