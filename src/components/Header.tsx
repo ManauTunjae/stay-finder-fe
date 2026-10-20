@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { Menu, X, User } from "lucide-react";
+import { Menu, X, User, Search } from "lucide-react";
 import Link from "next/link";
 
 const navLinks = [
@@ -40,9 +40,9 @@ export default function Header() {
 
         {user ? (
           <Link
-            href="/auth/register"
-            aria-label="Min profil"
-            className="bg-gray-300 hidden md:block p-1 rounded-2xl hover:bg-white w-8 h-8 text-gray-700"
+            href="/bookings"
+            aria-label="Mina bokningar"
+            className="bg-gray-300 hidden md:block px-4 py-2 rounded-full hover:bg-white text-sm font-medium cursor-pointer"
           >
             <User />
           </Link>
@@ -55,6 +55,13 @@ export default function Header() {
             <User />
           </button>
         )}
+
+        <Link
+          href="/search"
+          className="bg-gray-300 hidden md:block px-4 py-2 rounded-full hover:bg-white text-sm font-medium cursor-pointer"
+        >
+          <Search />
+        </Link>
 
         <button
           aria-label="Öppna meny"

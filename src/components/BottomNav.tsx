@@ -7,7 +7,7 @@ const navItems = [
   { label: "search", href: "/search", icon: Search },
   { label: "home", href: "/", icon: Home },
   { label: "favorite", href: "/favorite", icon: Heart },
-  { label: "message", href: "/message", icon: Mail },
+  { label: "message", href: "/bookings", icon: Mail },
   { label: "profile", href: "/auth-me", icon: CircleUser },
 ];
 

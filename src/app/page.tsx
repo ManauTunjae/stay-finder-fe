@@ -4,7 +4,11 @@ import PropertyRow from "@/components/PropertyRow";
 const featured = ["Stockholm", "Göteborg"];
 
 export default async function Home() {
-  const properties = await getProperties({ limit: 30 });
+  const properties = await getProperties({
+    limit: 50,
+    sort_by: "price_per_night",
+    sort_order: "asc",
+  });
 
   return (
     <main className="py-4 flex flex-col gap-4 md:gap-10">
@@ -13,10 +17,15 @@ export default async function Home() {
           key={c}
           title={c}
           properties={properties.filter((p) => p.city === c)}
+          href={`/search?city=${encodeURIComponent(c)}`}
         />
       ))}
 
-      <PropertyRow title="Alla boenden" properties={properties} />
+      <PropertyRow
+        title="Alla boenden"
+        properties={properties}
+        href="/search"
+      />
     </main>
   );
 }
