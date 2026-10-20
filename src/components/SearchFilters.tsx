@@ -36,7 +36,7 @@ export default function SearchFilters({
     if (maxPrice) query.set("max_price", maxPrice);
     if (guests) query.set("max_guests", guests);
     if (sortOrder) query.set("sort_order", sortOrder);
-    if (q.trim()) query.set("q", q.toString());
+    if (q.trim()) query.set("q", q.trim());
 
     router.push(`/search?${query.toString()}`);
   }
