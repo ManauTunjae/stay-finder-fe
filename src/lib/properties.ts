@@ -17,7 +17,7 @@ export async function createProperty(data: NewProperty): Promise<Property> {
     throw new ApiError(
       json.error ?? "Kunde inte skapa boendet",
       res.status,
-      Object.fromEntries(json.error ?? []),
+      Object.fromEntries(json.errors ?? []),
     );
   }
   return json;
