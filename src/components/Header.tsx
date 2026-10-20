@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { Menu, X, User, Search } from "lucide-react";
+import { Menu, X, User, Search, BuildingComplexPlus } from "lucide-react";
 import Link from "next/link";
 
 const navLinks = [
@@ -27,14 +27,14 @@ export default function Header() {
             href="/auth/register"
             className="bg-gray-300 hidden md:block px-4 py-2 rounded-full hover:bg-white text-sm font-medium"
           >
-            Skapa boende
+            <BuildingComplexPlus />
           </Link>
         ) : (
           <button
             onClick={() => openAuthModal("login")}
             className="bg-gray-300 hidden md:block px-4 py-2 rounded-full hover:bg-white text-sm font-medium cursor-pointer"
           >
-            Skapa boenden
+            <BuildingComplexPlus />
           </button>
         )}
 
