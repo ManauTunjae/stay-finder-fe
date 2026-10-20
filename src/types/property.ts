@@ -22,3 +22,14 @@ export type PropertyQuery = {
   limit?: number;
   q?: string;
 };
+
+export type NewProperty = {
+  title: string;
+  description: string;
+  city: string;
+  country: string;
+  kind: "apartment" | "villa";
+  price_per_night: number;
+  max_guests: number;
+  image_url?: string;
+};

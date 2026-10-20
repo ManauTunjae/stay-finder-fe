@@ -4,8 +4,9 @@ import { useState } from "react";
 import { X, ClipboardClock } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { calculateNights, getTodayDate } from "@/lib/date";
-import { createdBooking, ApiError } from "@/lib/bookings";
+import { createdBooking } from "@/lib/bookings";
 import type { Booking } from "@/types/booking";
+import { ApiError } from "@/lib/apiError";
 
 type Props = {
   propertyId: string;
