@@ -47,7 +47,7 @@ export default function SearchFilters({
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-gray-50 border border-gray-200 rounded-2xl p-4 mb-6 grid grid-cols-2 gap-3 md:flex md:items-end"
+      className="bg-gray-100 border border-gray-300 rounded-2xl p-4 mb-6 grid grid-cols-2 gap-3 md:flex md:items-end"
     >
       <label className="text-sm font-semibold col-span-2 md:flex-1">
         Sök
@@ -117,14 +117,14 @@ export default function SearchFilters({
       <div className="col-span-2 flex gap-2">
         <button
           type="submit"
-          className="bg-green-700 text-white px-5 py-2 rounded-lg font-semibold cursor-pointer"
+          className="bg-green-600 text-white px-5 py-2 rounded-lg font-semibold cursor-pointer"
         >
           Sök
         </button>
         <button
           type="button"
           onClick={handleClear}
-          className="bg-gray-500 text-white px-5 py-2 rounded-lg font-semibold cursor-pointer"
+          className="bg-white border border-gray-300 text-black px-5 py-2 rounded-lg font-semibold cursor-pointer"
         >
           Rensa
         </button>

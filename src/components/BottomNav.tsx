@@ -18,7 +18,7 @@ const navItems = [
     icon: BuildingComplexPlus,
   },
   { label: "message", href: "/bookings", icon: Mail },
-  { label: "profile", href: "/auth-me", icon: CircleUser },
+  { label: "profile", href: "/profile", icon: CircleUser },
 ];
 
 export default function BottomNav() {

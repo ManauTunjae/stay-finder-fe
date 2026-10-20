@@ -30,7 +30,7 @@ export default async function SearchPage({ searchParams }: Props) {
 
   return (
     <div className="p-4 md:px-10 md:py-8">
-      <h1 className="text-2xl font-bold mb-6">Sök boenden</h1>
+      <h1 className="text-xl font-bold mb-6">Sök boenden</h1>
       <SearchFilters
         key={JSON.stringify(params)}
         cities={cities}

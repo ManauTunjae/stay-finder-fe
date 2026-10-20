@@ -5,6 +5,7 @@ import { useAuth } from "@/context/AuthContext";
 import { Menu, X, User, Search, BuildingComplexPlus } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import Avatar from "./Avatar";
 
 const navLinks = [
   { label: "Få hjälp", href: "/help" },
@@ -82,11 +83,15 @@ export default function Header() {
 
         {user ? (
           <Link
-            href="/bookings"
-            aria-label="Mina bokningar"
-            className={iconClass("/bookings")}
+            href="/profile"
+            aria-label="Min profil"
+            className={`hidden md:flex rounded-full ${
+              pathname === "/profile"
+                ? "ring-2 ring-blue-900 ring-offset-2"
+                : ""
+            }`}
           >
-            <User className="w-6 h-6" />
+            <Avatar email={user.email} size="sm" />
           </Link>
         ) : (
           <button
