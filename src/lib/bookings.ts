@@ -1,21 +1,7 @@
 import type { Booking, NewBooking } from "@/types/booking";
+import { ApiError } from "./apiError";
 
 const API_URL = "/api";
-
-export class ApiError extends Error {
-  status: number;
-  fieldErrors: Record<string, string>;
-
-  constructor(
-    message: string,
-    status: number,
-    fieldErrors: Record<string, string> = {},
-  ) {
-    super(message);
-    this.status = status;
-    this.fieldErrors = fieldErrors;
-  }
-}
 
 export async function getMyBookings(): Promise<Booking[]> {
   const res = await fetch(`${API_URL}/bookings`, {
