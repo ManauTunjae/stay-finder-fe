@@ -11,5 +11,14 @@ export async function createProperty(data: NewProperty): Promise<Property> {
     body: JSON.stringify(data),
   });
 
-  
+  const json = await res.json();
+
+  if (!res.ok) {
+    throw new ApiError(
+      json.error ?? "Kunde inte skapa boendet",
+      res.status,
+      Object.fromEntries(json.error ?? []),
+    );
+  }
+  return json;
 }
