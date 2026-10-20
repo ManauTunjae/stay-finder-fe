@@ -82,9 +82,9 @@ export default function Header() {
 
         {user ? (
           <Link
-            href="/bookings"
-            aria-label="Mina bokningar"
-            className={iconClass("/bookings")}
+            href="/profile"
+            aria-label="Min profil"
+            className={iconClass("/profile")}
           >
             <User className="w-6 h-6" />
           </Link>
