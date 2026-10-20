@@ -42,7 +42,7 @@ export default async function SearchPage({ searchParams }: Props) {
       {properties.length === 0 ? (
         <p className="text-gray-500">Hitta inga boenden</p>
       ) : (
-        <div className="flex flex-wrap gap-4 md:gap-6">
+        <div className="flex flex-wrap gap-6 md:gap-6">
           {properties.map((p) => (
             <PropertyCard key={p.property_id} property={p} />
           ))}
