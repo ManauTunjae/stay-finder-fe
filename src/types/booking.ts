@@ -12,6 +12,10 @@ export type Booking = {
   total_price: number;
   status: BookingStatus;
   created_at: string;
+  properties?: {
+    title: string;
+    city: string;
+  } | null;
 };
 
 export type NewBooking = {

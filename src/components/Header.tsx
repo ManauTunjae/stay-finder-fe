@@ -5,6 +5,7 @@ import { useAuth } from "@/context/AuthContext";
 import { Menu, X, User, Search, BuildingComplexPlus } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import Avatar from "./Avatar";
 
 const navLinks = [
   { label: "Få hjälp", href: "/help" },
@@ -47,21 +48,22 @@ export default function Header() {
     return `hidden md:flex items-center justify-center w-10 h-10 rounded-full cursor-pointer ${
       isActive
         ? "bg-blue-900 text-white"
-        : "bg-gray-300 text-gray-700 hover:bg-white"
+        : "bg-orange-300 text-gray-700 hover:bg-white"
     }`;
   }
 
   return (
     <header
       ref={headerRef}
-      className="relative flex justify-between items-center bg-blue-200/50 px-4 md:px-10 py-3"
+      className="relative z-40 flex justify-between items-center bg-gray-200/80 px-4 md:px-10 py-3"
     >
-      <Link href="/" className="font-sans text-gray-900 text-2xl font-bold">
-        StayFinder
+      <Link href="/" className="font-sans text-3xl font-bold">
+        <span className="text-blue-600">Stay</span>
+        <span className="text-orange-600">Finder</span>
       </Link>
 
       {/* Höger: "Skapa boende" (bara desktop) + hamburgermeny (alltid) */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-5">
         {user ? (
           <Link
             href="/properties/new"
@@ -82,11 +84,15 @@ export default function Header() {
 
         {user ? (
           <Link
-            href="/bookings"
-            aria-label="Mina bokningar"
-            className={iconClass("/bookings")}
+            href="/profile"
+            aria-label="Min profil"
+            className={`hidden md:flex rounded-full ${
+              pathname === "/profile"
+                ? "ring-2 ring-blue-900 ring-offset-2"
+                : ""
+            }`}
           >
-            <User className="w-6 h-6" />
+            <Avatar email={user.email} size="sm" />
           </Link>
         ) : (
           <button
@@ -117,7 +123,7 @@ export default function Header() {
 
       <nav
         inert={!isOpen}
-        className={`absolute right-4 md:right-10 top-full mt-2 w-64 z-10 bg-white flex flex-col gap-3 p-4 rounded-2xl shadow-lg origin-top-right transition-all duration-500 ${
+        className={`absolute right-4 md:right-10 top-full mt-2 w-64 z-10 bg-white/90 flex flex-col gap-3 p-4 rounded-2xl shadow-lg origin-top-right transition-all duration-500 ${
           isOpen
             ? "opacity-100 scale-100"
             : "opacity-0 scale-95 pointer-events-none"
@@ -128,13 +134,13 @@ export default function Header() {
             key={l.href}
             href={l.href}
             onClick={() => setIsOpen(false)}
-            className="px-4 py-3 hover:bg-gray-100 text-sm"
+            className="px-4 py-3 hover:bg-white rounded-lg text-base"
           >
             {l.label}
           </Link>
         ))}
 
-        <hr className="my-2 border-gray-200" />
+        <hr className="my-2 border-gray-200 rounded-lg" />
 
         {isLoading ? null : user ? (
           // Inloggad
@@ -143,7 +149,7 @@ export default function Header() {
             <Link
               href="/bookings"
               onClick={() => setIsOpen(false)}
-              className="px-4 py-2 hover:bg-gray-100 rounded-lg text-sm"
+              className="px-4 py-2 hover:bg-white rounded-lg text-base"
             >
               Mina bokningar
             </Link>
@@ -152,20 +158,19 @@ export default function Header() {
                 logoutUser();
                 setIsOpen(false);
               }}
-              className="px-4 py-3 hover:bg-gray-100 rounded-lg text-sm text-left cursor-pointer"
+              className="px-4 py-3 hover:bg-white rounded-lg text-base text-left cursor-pointer"
             >
               Logga ut
             </button>
           </>
         ) : (
-          // Utloggad
           <>
             <button
               onClick={() => {
                 openAuthModal("login");
                 setIsOpen(false);
               }}
-              className="px-4 py-3 hover:bg-gray-100 rounded-lg text-sm text-left cursor-pointer"
+              className="px-4 py-3 hover:bg-white rounded-lg text-base text-left cursor-pointer"
             >
               Logga in
             </button>
@@ -174,7 +179,7 @@ export default function Header() {
                 openAuthModal("register");
                 setIsOpen(false);
               }}
-              className="px-4 py-3 hover:bg-gray-100 rounded-lg text-sm text-left cursor-pointer"
+              className="px-4 py-3 hover:bg-white rounded-lg text-base text-left cursor-pointer"
             >
               Bli medlem
             </button>
