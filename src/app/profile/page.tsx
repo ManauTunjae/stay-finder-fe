@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
-import { getMyProperties } from "@/lib/properties";
 import type { Property } from "@/types/property";
 import Avatar from "@/components/Avatar";
 import PropertyCard from "@/components/PropertyCard";
@@ -18,7 +17,7 @@ export default function ProfilePage() {
   const [properties, setProperties] = useState<Property[]>([]);
   const [isFetching, setIsFetching] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [deletingId, setDeletingId] = usrState<string | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   useEffect(() => {
     if (isLoading || !user) return;
@@ -118,7 +117,18 @@ export default function ProfilePage() {
         {properties.length > 0 && (
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {properties.map((p) => (
-              <PropertyCard key={p.property_id} property={p} />
+              <div key={p.property_id} className="flex flex-col gap-2">
+                <PropertyCard property={p} />
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleDelete(p.property_id)}
+                    disabled={deletingId === p.property_id}
+                    className="flex-1 border border-red-600 text-red-600 hover:bg-red-50 px-3 py-1.5 rounded-lg text-sm font-semibold cursor-pointer disabled:opacity-50"
+                  >
+                    {deletingId === p.property_id ? "Tar bort..." : "Ta bort"}
+                  </button>
+                </div>
+              </div>
             ))}
           </div>
         )}
