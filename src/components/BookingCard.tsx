@@ -10,6 +10,7 @@ import {
 } from "@/lib/bookings";
 import { getTodayDate } from "@/lib/date";
 import { ApiError } from "@/lib/apiError";
+import { MapPin } from "lucide-react";
 
 const statusInfo: Record<BookingStatus, { label: string; className: string }> =
   {
@@ -124,6 +125,17 @@ export default function BookingCard({ booking, onUpdated, isHost }: Props) {
       >
         {status.label}
       </span>
+      {booking.properties && (
+        <div>
+          <p className="font-bold text-lg">{booking.properties.title}</p>
+          <span className="flex gap-2 items-center px-2 py-1 rounded-md text-base font-medium">
+            <MapPin className="w-4 h-4" />
+            <p className="text-sm text-gray-500 font-semibold">
+              {booking.properties.city}
+            </p>
+          </span>
+        </div>
+      )}
       <p className="text-sm">Namn: {booking.guest_name}</p>
       <p className="text-sm">E-post: {booking.guest_email}</p>
       <p className="text-sm">
