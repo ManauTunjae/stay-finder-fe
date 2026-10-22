@@ -8,6 +8,8 @@ import { getMyProperties } from "@/lib/properties";
 import type { Property } from "@/types/property";
 import Avatar from "@/components/Avatar";
 import PropertyCard from "@/components/PropertyCard";
+import { getMyProperties, deleteProperty } from "@/lib/properties";
+import { ApiError } from "@/lib/apiError";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -16,6 +18,7 @@ export default function ProfilePage() {
   const [properties, setProperties] = useState<Property[]>([]);
   const [isFetching, setIsFetching] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [deletingId, setDeletingId] = usrState<string | null>(null);
 
   useEffect(() => {
     if (isLoading || !user) return;
@@ -29,6 +32,24 @@ export default function ProfilePage() {
   async function handleLogout() {
     await logoutUser();
     router.push("/");
+  }
+
+  async function handleDelete(id: string) {
+    if (!window.confirm("Vill du verkligen ta bort boendet?")) return;
+
+    setError(null);
+    setDeletingId(id);
+
+    try {
+      await deleteProperty(id);
+      setProperties((prev) =>
+        prev.filter((p) => p.property_id !== p.property_id),
+      );
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "Något gick fel");
+    } finally {
+      setDeletingId(null);
+    }
   }
 
   // 1. Laddar
