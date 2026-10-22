@@ -79,7 +79,7 @@ export default function ProfilePage() {
       <section>
         <h2 className="text-xl font-bold mb-4">Mina boenden</h2>
 
-        {isFetching && <p>Hämtar dina boenden...</p>}
+        {/* {isFetching && <p>Hämtar dina boenden...</p>} */}
         {error && <p className="text-red-600">{error}</p>}
 
         {!isFetching && !error && properties.length === 0 && (
