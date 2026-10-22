@@ -39,3 +39,16 @@ export async function getMyProperties(): Promise<Property[]> {
 
   return json.data;
 }
+
+export async function deleteProperty(id: string): Promise<void> {
+  const res = await fetch(`${API_URL}/properties/${id}`, {
+    method: "DELETE",
+    credentials: "include",
+  });
+
+  if (!res.ok) {
+    const json = await res.json().catch(() => ({}));
+    throw new ApiError(json.error ?? "Kunde inte ta bort boendet", res.status);
+  }
+  return;
+}
