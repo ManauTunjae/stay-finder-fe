@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
-import { getMyProperties } from "@/lib/properties";
 import type { Property } from "@/types/property";
 import Avatar from "@/components/Avatar";
 import PropertyCard from "@/components/PropertyCard";
+import { getMyProperties, deleteProperty } from "@/lib/properties";
+import { ApiError } from "@/lib/apiError";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -16,6 +17,7 @@ export default function ProfilePage() {
   const [properties, setProperties] = useState<Property[]>([]);
   const [isFetching, setIsFetching] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   useEffect(() => {
     if (isLoading || !user) return;
@@ -29,6 +31,24 @@ export default function ProfilePage() {
   async function handleLogout() {
     await logoutUser();
     router.push("/");
+  }
+
+  async function handleDelete(id: string) {
+    if (!window.confirm("Vill du verkligen ta bort boendet?")) return;
+
+    setError(null);
+    setDeletingId(id);
+
+    try {
+      await deleteProperty(id);
+      setProperties((prev) =>
+        prev.filter((p) => p.property_id !== p.property_id),
+      );
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "Något gick fel");
+    } finally {
+      setDeletingId(null);
+    }
   }
 
   // 1. Laddar
@@ -97,7 +117,18 @@ export default function ProfilePage() {
         {properties.length > 0 && (
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {properties.map((p) => (
-              <PropertyCard key={p.property_id} property={p} />
+              <div key={p.property_id} className="flex flex-col gap-2">
+                <PropertyCard property={p} />
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleDelete(p.property_id)}
+                    disabled={deletingId === p.property_id}
+                    className="flex-1 border border-red-600 text-red-600 hover:bg-red-50 px-3 py-1.5 rounded-lg text-sm font-semibold cursor-pointer disabled:opacity-50"
+                  >
+                    {deletingId === p.property_id ? "Tar bort..." : "Ta bort"}
+                  </button>
+                </div>
+              </div>
             ))}
           </div>
         )}
