@@ -124,6 +124,14 @@ export default function BookingCard({ booking, onUpdated, isHost }: Props) {
       >
         {status.label}
       </span>
+      {booking.properties && (
+        <div>
+          <p className="font-bold text-lg">{booking.properties.title}</p>
+          <p className="text-sm text-gray-500 font-semibold">
+            {booking.properties.city}
+          </p>
+        </div>
+      )}
       <p className="text-sm">Namn: {booking.guest_name}</p>
       <p className="text-sm">E-post: {booking.guest_email}</p>
       <p className="text-sm">
