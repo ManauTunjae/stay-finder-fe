@@ -15,6 +15,7 @@ export type Booking = {
   properties?: {
     title: string;
     city: string;
+    image_url: string | null;
   } | null;
 };
 
