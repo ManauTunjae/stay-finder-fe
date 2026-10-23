@@ -40,7 +40,7 @@ export default function BookingsPage() {
   if (!user) {
     return (
       <BlurredBackground>
-        <div className="text-center text-xl flex flex-col items-center gap-3 py-20">
+        <div className="text-center text-lg flex flex-col items-center gap-3 py-20">
           <p>Du måste logga in för att se dina bokningar.</p>
           <button
             onClick={() => openAuthModal("login")}
