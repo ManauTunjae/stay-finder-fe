@@ -9,6 +9,8 @@ import Avatar from "@/components/Avatar";
 import PropertyCard from "@/components/PropertyCard";
 import { getMyProperties, deleteProperty } from "@/lib/properties";
 import { ApiError } from "@/lib/apiError";
+import { X } from "lucide-react";
+import PropertyForm from "@/components/PropertyForm";
 
 export default function ProfilePage() {
   const router = useRouter();
