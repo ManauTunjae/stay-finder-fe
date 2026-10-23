@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { Menu, X, User, Search, BuildingComplexPlus } from "lucide-react";
+import { Menu, X, User, Search, BuildingComplexPlus, Mail } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Avatar from "./Avatar";
@@ -101,6 +101,24 @@ export default function Header() {
             className={iconClass("")}
           >
             <User className="w-6 h-6" />
+          </button>
+        )}
+
+        {user ? (
+          <Link
+            href="/bookings"
+            aria-label="Mina bookingar"
+            className={iconClass("")}
+          >
+            <Mail className="w-6 h-6" />
+          </Link>
+        ) : (
+          <button
+            onClick={() => openAuthModal("login")}
+            aria-label="Logga in"
+            className={iconClass("")}
+          >
+            <Mail className="w-6 h-6" />
           </button>
         )}
 
