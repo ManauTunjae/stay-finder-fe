@@ -6,6 +6,7 @@ import { Menu, X, User, Search, BuildingComplexPlus, Mail } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Avatar from "./Avatar";
+import { getMyBookings } from "@/lib/bookings";
 
 const navLinks = [
   { label: "Få hjälp", href: "/help" },
@@ -15,6 +16,7 @@ const navLinks = [
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const { user, isLoading, openAuthModal, logoutUser } = useAuth();
+  const [pendingCount, setPendingCount] = useState(0);
   const pathname = usePathname();
   const headerRef = useRef<HTMLElement>(null);
 
