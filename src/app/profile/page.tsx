@@ -147,6 +147,32 @@ export default function ProfilePage() {
           </div>
         )}
       </section>
+
+      {isEditing && (
+        <div
+          className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4"
+          onClick={() => setIsEditing(null)}
+        >
+          <div
+            className="relative bg-white rounded-2xl shadow-lg w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              aria-label="Stäng"
+              className="absolute top-4 right-4 cursor-pointer"
+              onClick={() => setIsEditing(null)}
+            >
+              <X className="w-6 h-6" />
+            </button>
+            <h2 className="text-xl font-bold mb-6">Ändra boende</h2>
+            <PropertyForm
+              key={isEditing.property_id}
+              property={isEditing}
+              onSaved={handleSaved}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
