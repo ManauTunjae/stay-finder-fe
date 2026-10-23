@@ -25,7 +25,11 @@ export default function BookingsPage() {
 
   function handleUpdated(updated: Booking) {
     setBookings((prev) =>
-      prev.map((b) => (b.booking_id === updated.booking_id ? updated : b)),
+      prev.map((b) =>
+        b.booking_id === updated.booking_id
+          ? { ...b, ...updated, properties: updated.properties ?? b.properties }
+          : b,
+      ),
     );
   }
 
