@@ -75,7 +75,7 @@ export default function PropertyForm({ property, onSaved }: Props) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="grid grid-cols-1 bg-blue-100/30 rounded-lg p-10 md:grid-cols-2 gap-x-8 gap-y-4"
+      className="grid grid-cols-1 bg-white/85 shadow-xl rounded-lg p-10 md:grid-cols-2 gap-x-8 gap-y-4"
     >
       <div className="flex flex-col gap-4">
         <label className="text-lg font-semibold">
