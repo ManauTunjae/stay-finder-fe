@@ -20,6 +20,7 @@ export default function ProfilePage() {
   const [isFetching, setIsFetching] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [isEditing, setIsEditing] = useState<Property | null>(null);
 
   useEffect(() => {
     if (isLoading || !user) return;
@@ -43,9 +44,7 @@ export default function ProfilePage() {
 
     try {
       await deleteProperty(id);
-      setProperties((prev) =>
-        prev.filter((p) => p.property_id !== p.property_id),
-      );
+      setProperties((prev) => prev.filter((p) => p.property_id !== id));
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Något gick fel");
     } finally {
@@ -71,6 +70,13 @@ export default function ProfilePage() {
         </button>
       </div>
     );
+  }
+
+  function handleSaved(updated: Property) {
+    setProperties((prev) =>
+      prev.map((p) => (p.property_id === updated.property_id ? updated : p)),
+    );
+    setIsEditing(null);
   }
 
   // 3. Inloggad
@@ -120,12 +126,18 @@ export default function ProfilePage() {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {properties.map((p) => (
               <div key={p.property_id} className="flex flex-col gap-2">
-                <PropertyCard property={p} />
+                <PropertyCard property={p} fullWidth />
                 <div className="flex gap-2">
+                  <button
+                    onClick={() => setIsEditing(p)}
+                    className="flex-1 border border-blue-400 text-blue-700 hover:bg-gray-50 px-1.5 py-1.5 rounded-lg text-sm font-semibold cursor-pointer disabled:opacity-50"
+                  >
+                    Ändra
+                  </button>
                   <button
                     onClick={() => handleDelete(p.property_id)}
                     disabled={deletingId === p.property_id}
-                    className="flex-1 border border-red-600 text-red-600 hover:bg-red-50 px-3 py-1.5 rounded-lg text-sm font-semibold cursor-pointer disabled:opacity-50"
+                    className="flex-1 border border-red-600 text-red-600 hover:bg-red-50 px-1.5 py-1.5 rounded-lg text-sm font-semibold cursor-pointer disabled:opacity-50"
                   >
                     {deletingId === p.property_id ? "Tar bort..." : "Ta bort"}
                   </button>
