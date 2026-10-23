@@ -79,7 +79,7 @@ export default function BookingsPage() {
             <h2 className="text-2xl font-bold mb-4">
               Bokningar på mina boenden
             </h2>
-            <div className="flex flex-col gap-3 bg-white/90 rounded-lg">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               {hostBookings.map((b) => (
                 <BookingCard
                   key={b.booking_id}
