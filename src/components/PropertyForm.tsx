@@ -2,11 +2,16 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createProperty } from "@/lib/properties";
+import { createProperty, updateProperty } from "@/lib/properties";
 import { ApiError } from "@/lib/apiError";
-import type { NewProperty } from "@/types/property";
+import type { NewProperty, Property } from "@/types/property";
 
-export default function PropertyForm() {
+type Props = {
+  property?: Property;
+  onSaved?: (saved: Property) => void;
+};
+
+export default function PropertyForm({ property, onSaved }: Props) {
   const router = useRouter();
 
   const [title, setTitle] = useState("");
@@ -21,6 +26,7 @@ export default function PropertyForm() {
   const [error, setError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const isEdit = !!property;
 
   async function handleSubmit(e: React.SubmitEvent) {
     e.preventDefault();
@@ -29,7 +35,7 @@ export default function PropertyForm() {
     setIsSubmitting(true);
 
     try {
-      const newProperty = await createProperty({
+      const data: NewProperty = {
         title,
         description,
         city,
@@ -38,8 +44,17 @@ export default function PropertyForm() {
         price_per_night: Number(price),
         max_guests: Number(maxGuests),
         image_url: imageUrl.trim() || undefined,
-      });
-      router.push(`/properties/${newProperty.property_id}`);
+      };
+
+      const saved = isEdit
+        ? await updateProperty(property.property_id, data)
+        : await createProperty(data);
+
+      if (onSaved) {
+        onSaved(saved);
+      } else {
+        router.push(`/properties/${saved.property_id}`);
+      }
     } catch (err) {
       if (err instanceof ApiError) {
         setError(err.message);
