@@ -40,6 +40,28 @@ export async function getMyProperties(): Promise<Property[]> {
   return json.data;
 }
 
+export async function updateProperty(
+  id: string,
+  data: NewProperty,
+): Promise<Property> {
+  const res = await fetch(`${API_URL}/properties/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify(data),
+  });
+  const json = await res.json();
+
+  if (!res.ok) {
+    throw new ApiError(
+      json.error ?? "Kunde inte spara ändringarna",
+      res.status,
+      Object.fromEntries(json.errors ?? []),
+    );
+  }
+  return json;
+}
+
 export async function deleteProperty(id: string): Promise<void> {
   const res = await fetch(`${API_URL}/properties/${id}`, {
     method: "DELETE",
