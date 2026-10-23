@@ -6,6 +6,7 @@ import { Menu, X, User, Search, BuildingComplexPlus, Mail } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Avatar from "./Avatar";
+import { getMyBookings } from "@/lib/bookings";
 
 const navLinks = [
   { label: "Få hjälp", href: "/help" },
@@ -15,6 +16,7 @@ const navLinks = [
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const { user, isLoading, openAuthModal, logoutUser } = useAuth();
+  const [pendingCount, setPendingCount] = useState(0);
   const pathname = usePathname();
   const headerRef = useRef<HTMLElement>(null);
 
@@ -51,6 +53,19 @@ export default function Header() {
         : "bg-orange-300 text-gray-700 hover:bg-white"
     }`;
   }
+
+  useEffect(() => {
+    if (!user) return;
+    
+    getMyBookings()
+      .then((bookings) => {
+        const count = bookings.filter(
+          (b) => b.status === "pending" && b.guest_id !== user.id,
+        ).length;
+        setPendingCount(count);
+      })
+      .catch(() => setPendingCount(0));
+  }, [user, pathname]);
 
   return (
     <header
@@ -107,10 +122,20 @@ export default function Header() {
         {user ? (
           <Link
             href="/bookings"
-            aria-label="Mina bookingar"
-            className={iconClass("")}
+            aria-label={
+              pendingCount > 0
+                ? `Mina bokningar, ${pendingCount} väntar på bekräftelse`
+                : "Mina bokningar"
+            }
+            className={`relative ${iconClass("/bookings")}`}
           >
             <Mail className="w-6 h-6" />
+
+            {pendingCount > 0 && (
+              <span className="absolute -top-1 -right-1 min-w-5 h-5 px-1 rounded-full bg-red-600 text-white text-xs font-bold flex items-center justify-center">
+                {pendingCount > 9 ? "9+" : pendingCount}
+              </span>
+            )}
           </Link>
         ) : (
           <button
