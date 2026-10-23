@@ -4,6 +4,7 @@ import Image from "next/image";
 
 import { useAuth } from "@/context/AuthContext";
 import PropertyForm from "@/components/PropertyForm";
+import BlurredBackground from "@/components/BlurredBackground";
 
 export default function NewPropertyPage() {
   const { user, isLoading, openAuthModal } = useAuth();
@@ -27,24 +28,11 @@ export default function NewPropertyPage() {
   }
 
   return (
-    <div className="relative min-h-[calc(100vh-4rem)] overflow-hidden">
-      {/* 1. Suddig bild i bakgrunden */}
-      <Image
-        src="/hero.jpg"
-        alt=""
-        fill
-        sizes="100vw"
-        className="object-cover blur-lg scale-100 -z-10"
-      />
-
-      {/* 2. Ljus slöja, så det inte blir för mörkt */}
-      <div className="absolute inset-0 bg-white/30 -z-10" />
-
-      {/* 3. Innehållet, som förut */}
+    <BlurredBackground>
       <div className="p-4 md:px-10 md:py-8 max-w-7xl mx-auto">
         <h1 className="text-2xl font-bold mb-6">Skapa boende</h1>
         <PropertyForm />
       </div>
-    </div>
+    </BlurredBackground>
   );
 }
