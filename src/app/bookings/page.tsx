@@ -35,7 +35,7 @@ export default function BookingsPage() {
 
   if (!user) {
     return (
-      <div className="p-4 text-center flex flex-col items-center gap-3 py-20">
+      <div className="text-center flex flex-col items-center gap-3 py-20">
         <p>Du måste logga in för att se dina bokningar.</p>
         <button
           onClick={() => openAuthModal("login")}
@@ -52,7 +52,7 @@ export default function BookingsPage() {
 
   return (
     <BlurredBackground>
-      <div className="p-4 md:px-10 md:py-8 max-w-4xl mx-auto flex flex-col gap-8">
+      <div className="p-4 md:px-10 md:py-8 max-w-7xl mx-auto flex flex-col gap-8">
         {isFetching && <p>Hämtar bokningar...</p>}
         {error && <p className="text-red-600">{error}</p>}
 
@@ -61,7 +61,7 @@ export default function BookingsPage() {
           {myBookings.length === 0 ? (
             <p className="text-gray-500"> Du har ingen bokningar än.</p>
           ) : (
-            <div className="flex flex-col gap-3 bg-white/90 rounded-lg">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               {myBookings.map((b) => (
                 <BookingCard
                   key={b.booking_id}
