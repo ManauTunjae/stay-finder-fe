@@ -22,6 +22,8 @@ export default async function SearchPage({ searchParams }: Props) {
         : undefined,
     limit: 50,
     q: params.q,
+    check_in: params.check_in,
+    check_out: params.check_out,
   };
 
   const properties = await getProperties(query);
@@ -41,8 +43,10 @@ export default async function SearchPage({ searchParams }: Props) {
           initialGuests={params.max_guests}
           initialSortOrder={params.sort_order}
           initialQ={params.q}
+          initialCheckIn={params.check_in}
+          initialCheckOut={params.check_out}
         />
-        <p className="text-gray-500 mb-6">{properties.length} boenden</p>
+        <p className="text-gray-700 m-2">{properties.length} boenden</p>
         {properties.length === 0 ? (
           <p className="text-gray-500">Hitta inga boenden</p>
         ) : (

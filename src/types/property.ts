@@ -21,6 +21,8 @@ export type PropertyQuery = {
   sort_order?: "asc" | "desc";
   limit?: number;
   q?: string;
+  check_in?: string;
+  check_out?: string;
 };
 
 export type NewProperty = {
