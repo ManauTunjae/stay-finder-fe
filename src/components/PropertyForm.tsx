@@ -22,13 +22,28 @@ export default function PropertyForm({ property, onSaved }: Props) {
   const [kind, setKind] = useState<NewProperty["kind"]>(
     (property?.kind as NewProperty["kind"]) ?? "apartment",
   );
-  const [price, setPrice] = useState(property?.price_per_night ?? "");
-  const [maxGuests, setMaxGuests] = useState(property?.max_guests ?? "");
+  const [price, setPrice] = useState(
+    property ? String(property.price_per_night) : "",
+  );
+  const [maxGuests, setMaxGuests] = useState(
+    property ? String(property.max_guests) : "",
+  );
   const [imageUrl, setImageUrl] = useState(property?.image_url ?? "");
 
   const [error, setError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  function resetForm() {
+    setTitle("");
+    setDescription("");
+    setCity("");
+    setCountry("Sweden");
+    setKind("apartment");
+    setPrice("");
+    setMaxGuests("");
+    setImageUrl("");
+  }
 
   async function handleSubmit(e: React.SubmitEvent) {
     e.preventDefault();
@@ -55,6 +70,7 @@ export default function PropertyForm({ property, onSaved }: Props) {
       if (onSaved) {
         onSaved(saved);
       } else {
+        resetForm();
         router.push(`/properties/${saved.property_id}`);
       }
     } catch (err) {
@@ -140,7 +156,7 @@ export default function PropertyForm({ property, onSaved }: Props) {
           )}
         </label>
 
-        <label className="textlg font-semibold">
+        <label className="text-lg font-semibold">
           Land
           <input
             type="text"
@@ -166,7 +182,7 @@ export default function PropertyForm({ property, onSaved }: Props) {
             onChange={(e) => setPrice(e.target.value)}
             className={inputClass}
           />
-          {fieldErrors.price && (
+          {fieldErrors.price_per_night && (
             <span className="block text-sm text-red-600 mt-1">
               {fieldErrors.price_per_night}
             </span>
@@ -183,7 +199,7 @@ export default function PropertyForm({ property, onSaved }: Props) {
             onChange={(e) => setMaxGuests(e.target.value)}
             className={inputClass}
           />
-          {fieldErrors.maxGuests && (
+          {fieldErrors.max_guests && (
             <span className="block text-sm text-red-600 mt-1">
               {fieldErrors.max_guests}
             </span>

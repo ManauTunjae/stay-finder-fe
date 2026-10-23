@@ -15,15 +15,17 @@ export default function NewPropertyPage() {
 
   if (!user) {
     return (
-      <div className="p-4 text-center flex flex-col items-center gap-3 py-20">
-        <p>Du måste logga in för att skapa ett boende.</p>
-        <button
-          onClick={() => openAuthModal("login")}
-          className="bg-blue-900 text-white px-6 py-2 rounded-lg font-semibold cursor-pointer"
-        >
-          Logga in
-        </button>
-      </div>
+      <BlurredBackground>
+        <div className="p-4 text-xl text-center flex flex-col items-center gap-3 py-20">
+          <p>Du måste logga in för att skapa ett boende.</p>
+          <button
+            onClick={() => openAuthModal("login")}
+            className="bg-blue-900 text-white px-6 py-2 rounded-lg font-semibold cursor-pointer"
+          >
+            Logga in
+          </button>
+        </div>
+      </BlurredBackground>
     );
   }
 

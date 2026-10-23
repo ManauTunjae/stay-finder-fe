@@ -56,7 +56,7 @@ export default function Header() {
 
   useEffect(() => {
     if (!user) return;
-    
+
     getMyBookings()
       .then((bookings) => {
         const count = bookings.filter(
@@ -70,7 +70,7 @@ export default function Header() {
   return (
     <header
       ref={headerRef}
-      className="relative z-40 flex justify-between items-center bg-gray-200/80 px-4 md:px-10 py-3"
+      className="sticky top-0 z-40 h-16 flex justify-between items-center bg-white/20 backdrop-blur-xl backdrop-saturate-150 border-b border-white/20 shadow-lg px-4 md:px-10"
     >
       <Link href="/" className="font-sans text-3xl font-bold">
         <span className="text-blue-600">Stay</span>
@@ -157,7 +157,7 @@ export default function Header() {
 
         <button
           aria-label="Öppna meny"
-          className="cursor-pointer"
+          className="cursor-pointer text-gray-300"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}

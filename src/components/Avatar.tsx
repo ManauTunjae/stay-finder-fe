@@ -13,7 +13,7 @@ export default function Avatar({ email, size = "lg" }: Props) {
 
   return (
     <div
-      className={`${sizeClasses[size]} rounded-full bg-blue-600 text-white flex items-center justify-center font-semibold`}
+      className={`${sizeClasses[size]} rounded-full bg-gray-200 text-blue-600 shadow-xl flex items-center justify-center font-semibold`}
     >
       {initial}
     </div>
