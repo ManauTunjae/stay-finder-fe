@@ -31,7 +31,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <AuthProvider>
-          <Suspense fallback={<div className="h-16 bg-blue-200/50" />}>
+          <Suspense fallback={<div className="h-16 bg-white/60 border-b border-white/40" />}>
             <Header />
           </Suspense>
 

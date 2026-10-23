@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { getTodayDate } from "@/lib/date";
 
 type Props = {
   cities: string[];
@@ -10,6 +11,8 @@ type Props = {
   initialGuests?: string;
   initialSortOrder?: string;
   initialQ?: string;
+  initialCheckIn?: string;
+  initialCheckOut?: string;
 };
 
 export default function SearchFilters({
@@ -19,6 +22,8 @@ export default function SearchFilters({
   initialGuests,
   initialSortOrder,
   initialQ,
+  initialCheckIn,
+  initialCheckOut,
 }: Props) {
   const router = useRouter();
 
@@ -27,6 +32,11 @@ export default function SearchFilters({
   const [guests, setGuests] = useState(initialGuests ?? "");
   const [sortOrder, setSortOrder] = useState(initialSortOrder ?? "");
   const [q, setQ] = useState(initialQ ?? "");
+  const [checkIn, setCheckIn] = useState(initialCheckIn ?? "");
+  const [checkOut, setCheckOut] = useState(initialCheckOut ?? "");
+  const [dateError, setDateError] = useState<string | null>(null);
+
+  const today = getTodayDate();
 
   function handleSubmit(e: React.SubmitEvent) {
     e.preventDefault();
@@ -37,6 +47,17 @@ export default function SearchFilters({
     if (sortOrder) query.set("sort_order", sortOrder);
     if (q.trim()) query.set("q", q.trim());
 
+    setDateError(null);
+
+    if ((checkIn && !checkOut) || (!checkIn && checkOut)) {
+      setDateError("Välj både incheckning och utbeckning");
+      return;
+    }
+
+    if (checkIn && checkOut) {
+      query.set("check_in", checkIn);
+      query.set("check_out", checkOut);
+    }
     router.push(`/search?${query.toString()}`);
   }
 
@@ -47,7 +68,7 @@ export default function SearchFilters({
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-gray-100 border border-gray-300 rounded-2xl p-4 mb-6 grid grid-cols-2 gap-3 md:flex md:items-end"
+      className="bg-gray-100 border border-gray-300 rounded-2xl p-4 mb-6 grid grid-cols-2 md:grid-cols-6 gap-3 md:items-end"
     >
       <label className="text-sm font-semibold col-span-2 md:flex-1">
         Sök
@@ -114,6 +135,28 @@ export default function SearchFilters({
         </select>
       </label>
 
+      <label className="text-sm font-semibold md:flex-1">
+        Incheckning
+        <input
+          type="date"
+          min={today}
+          value={checkIn}
+          onChange={(e) => setCheckIn(e.target.value)}
+          className="block w-full h-11 border border-gray-300 rounded-lg px-3 mt-1 font-normal bg-white"
+        />
+      </label>
+
+      <label className="text-sm font-semibold md:flex-1">
+        Utcheckning
+        <input
+          type="date"
+          min={checkIn || today}
+          value={checkOut}
+          onChange={(e) => setCheckOut(e.target.value)}
+          className="block w-full h-11 border border-gray-300 rounded-lg px-3 mt-1 font-normal bg-white"
+        />
+      </label>
+
       <div className="col-span-2 flex gap-2">
         <button
           type="submit"
@@ -129,6 +172,11 @@ export default function SearchFilters({
           Rensa
         </button>
       </div>
+      {dateError && (
+        <p className="col-span-2 md:col-span-1 text-sm text-red-600">
+          {dateError}
+        </p>
+      )}
     </form>
   );
 }

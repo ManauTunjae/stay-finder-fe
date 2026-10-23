@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="relative h-[40vh] min-h-[280px] md:h-[50vh] overflow-hidden">
+    <section className="relative -mt-16 h-[60vh] min-h-[360px] md:h-[70vh] overflow-hidden">
       <Image
         src="/stockholm.jpg"
         alt="Stockholms stadshus i skymningen"
@@ -15,7 +15,7 @@ export default function Hero() {
 
       <div className="absolute inset-0 bg-black/30" />
 
-      <div className="relative z-10 h-full flex flex-col items-center justify-center text-center text-white px-4 gap-4">
+      <div className="relative z-10 h-full flex flex-col items-center justify-center text-center text-white px-4 gap-4 pt-16">
         <h1 className="text-3xl md:text-5xl font-bold">
           <span className="text-blue-700"> Stay</span>
           <span className="text-orange-600">Finder</span>

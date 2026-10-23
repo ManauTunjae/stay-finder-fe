@@ -2,10 +2,11 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { Menu, X, User, Search, BuildingComplexPlus } from "lucide-react";
+import { Menu, X, User, Search, BuildingComplexPlus, Mail } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Avatar from "./Avatar";
+import { getMyBookings } from "@/lib/bookings";
 
 const navLinks = [
   { label: "Få hjälp", href: "/help" },
@@ -15,6 +16,7 @@ const navLinks = [
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const { user, isLoading, openAuthModal, logoutUser } = useAuth();
+  const [pendingCount, setPendingCount] = useState(0);
   const pathname = usePathname();
   const headerRef = useRef<HTMLElement>(null);
 
@@ -52,10 +54,23 @@ export default function Header() {
     }`;
   }
 
+  useEffect(() => {
+    if (!user) return;
+
+    getMyBookings()
+      .then((bookings) => {
+        const count = bookings.filter(
+          (b) => b.status === "pending" && b.guest_id !== user.id,
+        ).length;
+        setPendingCount(count);
+      })
+      .catch(() => setPendingCount(0));
+  }, [user, pathname]);
+
   return (
     <header
       ref={headerRef}
-      className="relative z-40 flex justify-between items-center bg-gray-200/80 px-4 md:px-10 py-3"
+      className="sticky top-0 z-40 h-16 flex justify-between items-center bg-white/20 backdrop-blur-xl backdrop-saturate-150 border-b border-white/20 shadow-lg px-4 md:px-10"
     >
       <Link href="/" className="font-sans text-3xl font-bold">
         <span className="text-blue-600">Stay</span>
@@ -104,6 +119,34 @@ export default function Header() {
           </button>
         )}
 
+        {user ? (
+          <Link
+            href="/bookings"
+            aria-label={
+              pendingCount > 0
+                ? `Mina bokningar, ${pendingCount} väntar på bekräftelse`
+                : "Mina bokningar"
+            }
+            className={`relative ${iconClass("/bookings")}`}
+          >
+            <Mail className="w-6 h-6" />
+
+            {pendingCount > 0 && (
+              <span className="absolute -top-1 -right-1 min-w-5 h-5 px-1 rounded-full bg-red-600 text-white text-xs font-bold flex items-center justify-center">
+                {pendingCount > 9 ? "9+" : pendingCount}
+              </span>
+            )}
+          </Link>
+        ) : (
+          <button
+            onClick={() => openAuthModal("login")}
+            aria-label="Logga in"
+            className={iconClass("")}
+          >
+            <Mail className="w-6 h-6" />
+          </button>
+        )}
+
         <Link
           href="/search"
           aria-label="Sök boenden"
@@ -114,7 +157,7 @@ export default function Header() {
 
         <button
           aria-label="Öppna meny"
-          className="cursor-pointer"
+          className="cursor-pointer text-gray-300"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
