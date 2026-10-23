@@ -43,6 +43,8 @@ export default async function SearchPage({ searchParams }: Props) {
           initialGuests={params.max_guests}
           initialSortOrder={params.sort_order}
           initialQ={params.q}
+          initialCheckIn={params.check_in}
+          initialCheckOut={params.check_out}
         />
         <p className="text-gray-500 mb-6">{properties.length} boenden</p>
         {properties.length === 0 ? (
