@@ -12,21 +12,23 @@ type Props = {
 };
 
 export default function PropertyForm({ property, onSaved }: Props) {
+  const isEdit = !!property;
   const router = useRouter();
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [city, setCity] = useState("");
-  const [country, setCountry] = useState("Sweden");
-  const [kind, setKind] = useState<NewProperty["kind"]>("apartment");
-  const [price, setPrice] = useState("");
-  const [maxGuests, setMaxGuests] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [title, setTitle] = useState(property?.title ?? "");
+  const [description, setDescription] = useState(property?.description ?? "");
+  const [city, setCity] = useState(property?.city ?? "");
+  const [country, setCountry] = useState(property?.country ?? "");
+  const [kind, setKind] = useState<NewProperty["kind"]>(
+    (property?.kind as NewProperty["kind"]) ?? "apartment",
+  );
+  const [price, setPrice] = useState(property?.price_per_night ?? "");
+  const [maxGuests, setMaxGuests] = useState(property?.max_guests ?? "");
+  const [imageUrl, setImageUrl] = useState(property?.image_url ?? "");
 
   const [error, setError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const isEdit = !!property;
 
   async function handleSubmit(e: React.SubmitEvent) {
     e.preventDefault();
@@ -210,7 +212,11 @@ export default function PropertyForm({ property, onSaved }: Props) {
         disabled={isSubmitting}
         className="bg-blue-600 hover:bg-blue-800 text-white font-semibold py-2 rounded-lg cursor-pointer disabled:opacity-50"
       >
-        {isSubmitting ? "Skapar..." : "Skapa boende"}
+        {isSubmitting
+          ? "Sparar..."
+          : isEdit
+            ? "Spara ändringar"
+            : "Skapa boende"}
       </button>
     </form>
   );
