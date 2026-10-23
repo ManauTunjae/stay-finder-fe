@@ -121,17 +121,17 @@ export default function BookingCard({ booking, onUpdated, isHost }: Props) {
   }
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xl p-4 flex flex-col md:flex-row gap-4">
+    <div className="bg-white border border-gray-200 rounded-xl p-3 md:p-4 flex flex-row gap-3 md:gap-4">
       <Link
         href={`/properties/${booking.property_id}`}
-        className="relative w-full aspect-[4/3] md:w-60 md:aspect-square shrink-0 self-start rounded-xl overflow-hidden bg-gray-200"
+        className="relative w-24 sm:w-32 md:w-56 aspect-square shrink-0 self-start rounded-xl overflow-hidden bg-gray-200"
       >
         {booking.properties?.image_url ? (
           <Image
             src={booking.properties.image_url}
             alt={booking.properties.title}
             fill
-            sizes="(min-width: 768px) 224px, 100vw"
+            sizes="(min-width: 768px) 224px, 128px"
             className="object-cover"
           />
         ) : (
@@ -159,7 +159,7 @@ export default function BookingCard({ booking, onUpdated, isHost }: Props) {
         </span>
 
         <p className="text-sm">Namn: {booking.guest_name}</p>
-        <p className="text-sm">E-post: {booking.guest_email}</p>
+        <p className="text-xs md:text-sm break-all">E-post: {booking.guest_email}</p>
         <p className="text-sm">
           Datum: {booking.check_in} – {booking.check_out}
         </p>
@@ -168,7 +168,7 @@ export default function BookingCard({ booking, onUpdated, isHost }: Props) {
           Totalt {booking.total_price.toLocaleString("sv-SE")} SEK
         </p>
 
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           {canConfirm && (
             <button
               onClick={handleConfirm}
