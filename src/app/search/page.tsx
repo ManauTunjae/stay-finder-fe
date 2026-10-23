@@ -22,6 +22,8 @@ export default async function SearchPage({ searchParams }: Props) {
         : undefined,
     limit: 50,
     q: params.q,
+    check_in: params.check_in,
+    check_out: params.check_out,
   };
 
   const properties = await getProperties(query);
