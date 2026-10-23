@@ -4,25 +4,32 @@ import type { Property } from "@/types/property";
 
 type Props = {
   property: Property;
+  fullWidth?: boolean;
 };
 
-export default function PropertyCard({ property }: Props) {
+export default function PropertyCard({ property, fullWidth }: Props) {
   return (
     <Link
       href={`/properties/${property.property_id}`}
-      className="block w-40 md:w-56 lg:w-56 py-2 px-1 shrink-0"
+      className={`block py-2 px-1 ${
+        fullWidth ? "w-full" : "w-40 md:w-56 lg:w-56 shrink-0"
+      }`}
     >
       <div className="relative aspect-square rounded-xl overflow-hidden bg-gray-200">
         {property.image_url ? (
           <Image
             src={property.image_url}
-            alt={property.description}
+            alt={property.title}
             fill
-            sizes="(min-width: 1024px) 288px, (min-width: 768px) 224px, 160px"
+            sizes={
+              fullWidth
+                ? "(min-width: 768px) 33vw, 50vw"
+                : "(min-width: 1024px) 224px, (min-width: 768px) 224px, 160px"
+            }
             className="object-cover"
           />
         ) : (
-          <div className="flex items-center hustify-center h-full text-gray-400 text-sm">
+          <div className="flex items-center justify-center h-full text-gray-400 text-sm">
             Ingen bild
           </div>
         )}
