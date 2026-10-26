@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-
 import { useAuth } from "@/context/AuthContext";
 import PropertyForm from "@/components/PropertyForm";
 import BlurredBackground from "@/components/BlurredBackground";

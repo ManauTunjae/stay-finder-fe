@@ -9,7 +9,7 @@ export default function BlurredBackground({ children }: Props) {
     <div className="relative isolate min-h-[calc(100vh-4rem)]">
       <div className="fixed inset-0 -z-10 overflow-hidden">
         <Image
-          src="/hero.jpg"
+          src="/stockholm.jpg"
           alt=""
           fill
           sizes="100vw"
