@@ -94,7 +94,7 @@ export default function PropertyForm({ property, onSaved }: Props) {
       className="grid grid-cols-1 bg-white/85 shadow-xl rounded-lg p-10 md:grid-cols-2 gap-x-8 gap-y-4"
     >
       <div className="flex flex-col gap-4">
-        <label className="text-lg font-semibold">
+        <label className="text-sm font-semibold">
           Titel
           <input
             type="text"
@@ -110,7 +110,7 @@ export default function PropertyForm({ property, onSaved }: Props) {
           )}
         </label>
 
-        <label className="text-lg font-semibold">
+        <label className="text-sm font-semibold">
           Beskrivning
           <textarea
             required
@@ -126,7 +126,7 @@ export default function PropertyForm({ property, onSaved }: Props) {
           )}
         </label>
 
-        <label className="text-lg font-semibold">
+        <label className="text-sm font-semibold">
           Typ av boende
           <select
             value={kind}
@@ -140,7 +140,7 @@ export default function PropertyForm({ property, onSaved }: Props) {
       </div>
 
       <div className="flex flex-col gap-4">
-        <label className="text-lg font-semibold">
+        <label className="text-sm font-semibold">
           Stad
           <input
             type="text"
@@ -156,7 +156,7 @@ export default function PropertyForm({ property, onSaved }: Props) {
           )}
         </label>
 
-        <label className="text-lg font-semibold">
+        <label className="text-sm font-semibold">
           Land
           <input
             type="text"
@@ -172,7 +172,7 @@ export default function PropertyForm({ property, onSaved }: Props) {
           )}
         </label>
 
-        <label className="text-lg font-semibold">
+        <label className="text-sm font-semibold">
           Pris per natt
           <input
             type="number"
@@ -189,7 +189,7 @@ export default function PropertyForm({ property, onSaved }: Props) {
           )}
         </label>
 
-        <label className="text-lg font-semibold">
+        <label className="text-sm font-semibold">
           Max antal gäster
           <input
             type="number"
@@ -206,7 +206,7 @@ export default function PropertyForm({ property, onSaved }: Props) {
           )}
         </label>
 
-        <label className="text-lg font-semibold">
+        <label className="text-sm font-semibold">
           Bildlänk (valfri)
           <input
             type="url"

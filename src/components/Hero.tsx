@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="relative -mt-16 h-[60vh] min-h-[360px] md:h-[70vh] overflow-hidden">
+    <section className="relative -mt-16 h-[60vh] min-h-90 md:h-[70vh] overflow-hidden">
       <Image
         src="/stockholm.jpg"
         alt="Stockholms stadshus i skymningen"
