@@ -85,7 +85,7 @@ export default function ProfilePage() {
   // 3. Inloggad
   return (
     <BlurredBackground>
-      <div className="p-4 md:px-10 md:py-8 max-w-4xl mx-auto flex flex-col gap-8">
+      <div className="p-4 md:px-10 md:py-8 max-w-7xl mx-auto flex flex-col gap-8">
         {/* Del 1: Användaren */}
         <section className="flex flex-col items-center bg-gray-100 text-center text-lg gap-3 border border-gray-300 rounded-2xl p-6">
           <Avatar email={user.email} />
@@ -158,7 +158,7 @@ export default function ProfilePage() {
             onClick={() => setIsEditing(null)}
           >
             <div
-              className="relative bg-white rounded-2xl shadow-lg w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto"
+              className="relative bg-white rounded-2xl shadow-lg w-full max-w-5xl p-6 max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
               <button
