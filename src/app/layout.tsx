@@ -31,11 +31,19 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <AuthProvider>
-          <Suspense fallback={<div className="h-16 bg-white/60 border-b border-white/40" />}>
+          <Suspense
+            fallback={
+              <div className="h-16 bg-white/60 border-b border-white/40" />
+            }
+          >
             <Header />
           </Suspense>
 
-          <main className="flex-1 pb-20 md:pb-0">{children}</main>
+          <main className="flex-1 pb-20 md:pb-0">
+            <Suspense fallback={<p className="p-4">Laddar...</p>}>
+              {children}
+            </Suspense>
+          </main>
           <Footer />
 
           <Suspense fallback={null}>
